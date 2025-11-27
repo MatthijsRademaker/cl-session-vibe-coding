@@ -54,7 +54,10 @@ const sendMessage = async () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ message: userInput })
+      body: JSON.stringify({
+        conversationId: null, // Could track this for conversation history
+        message: userInput
+      })
     })
 
     if (!response.ok) {
@@ -67,7 +70,7 @@ const sendMessage = async () => {
       id: messageIdCounter++,
       text: data.response,
       sender: 'bot',
-      timestamp: new Date()
+      timestamp: new Date(data.timestamp)
     }
 
     messages.value.push(botMessage)

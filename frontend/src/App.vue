@@ -5,8 +5,8 @@ import ChatBot from './components/ChatBot.vue'
 <template>
   <div id="app">
     <header>
-      <h1>Vibecoding Workshop - Exercise 1</h1>
-      <p>Free-form LLM Implementation</p>
+      <h1>Vibecoding Workshop - Exercise 2</h1>
+      <p>DDD Architecture with Guardrails</p>
     </header>
     <main>
       <ChatBot />
