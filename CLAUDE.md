@@ -4,31 +4,47 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **vibecoding workshop** designed for experienced developers who are skeptical about LLM-assisted coding. The project demonstrates progressive levels of LLM integration through practical exercises:
+This is a **vibecoding workshop** designed for experienced developers who are skeptical about LLM-assisted coding. The project demonstrates progressive levels of LLM integration through practical exercises using a **chatbot** as the example application.
 
-1. **Exercise 1 - Free-form vibecoding**: Let the LLM work autonomously with minimal constraints (e.g., "create a form that posts to the backend")
-2. **Exercise 2 - Structured guardrails**: Establish baseline architectural patterns and constraints for the LLM to follow
-3. **Exercise 3 - Prompt engineering**: Use pre-made, reusable prompts for specific, controlled LLM behavior based on user preferences
+### Workshop Structure
+
+Each exercise follows this pattern:
+1. **Base layer** - Minimal scaffolding (Vue + .NET) → commit
+2. **Exercise solution** - Implementation with different levels of LLM guidance → commit
+
+### Exercise Levels
+
+1. **Exercise 1 - Free-form vibecoding**: Let the LLM work autonomously with minimal constraints (e.g., "create a chatbot")
+   - LLM makes ALL decisions about structure, patterns, features
+   - Shows what you get with zero guardrails
+
+2. **Exercise 2 - Structured guardrails**: Same task but with architectural constraints
+   - DDD for backend, specific Vue patterns for frontend
+   - Demonstrates controlled LLM behavior within established patterns
+
+3. **Exercise 3 - Prompt engineering**: Same task with pre-made, reusable prompts
+   - Template-based approach for consistency
+   - Shows how to standardize LLM output
 
 The workshop compares these approaches to help developers understand when and how to effectively use LLM assistance.
 
 ## Architecture
 
 ### Frontend
-- **Location**: `frontend/vibe/`
+- **Location**: `frontend/`
 - **Stack**: Vue 3 + TypeScript + Vite
 - **Build tool**: Rolldown-Vite (experimental Vite replacement)
 - **Component style**: Single File Components (SFC) with `<script setup>` syntax
 
 ### Backend
-- **Location**: `backend/` (currently empty)
-- **Planned stack**: .NET with Domain-Driven Design (DDD)
-- **Architecture layers**:
+- **Location**: `backend/Api/`
+- **Base**: Scaffolded .NET Web API
+- **For Exercise 2+**: Domain-Driven Design (DDD) structure
   - **Domain**: Core business logic and entities
   - **Application**: Use cases and application services
   - **Infrastructure**: Data access, external services
   - **API**: HTTP endpoints and controllers
-- **Testing**: Behavior-Driven Development (BDD) approach for verifying functionality
+- **Testing**: BDD approach for verifying functionality (Exercise 2+)
 
 ## Common Commands
 
@@ -36,7 +52,7 @@ The workshop compares these approaches to help developers understand when and ho
 
 ```bash
 # Navigate to frontend
-cd frontend/vibe
+cd frontend
 
 # Install dependencies
 npm install
@@ -51,25 +67,20 @@ npm run build
 npm run preview
 ```
 
-### Backend (.NET - to be implemented)
-
-When the .NET backend is scaffolded, typical commands will be:
+### Backend (.NET)
 
 ```bash
 # Navigate to backend
-cd backend
+cd backend/Api
 
 # Restore dependencies
 dotnet restore
 
 # Run the API
-dotnet run --project src/Api
+dotnet run
 
-# Run tests
+# Run tests (when added)
 dotnet test
-
-# Run BDD tests (once SpecFlow or similar is configured)
-dotnet test --filter Category=BDD
 ```
 
 ## Workshop Exercise Guidelines
