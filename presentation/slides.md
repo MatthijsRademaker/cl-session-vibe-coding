@@ -88,7 +88,7 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 <v-clicks>
 
 1. **Quick context** - I show what I built (5 min)
-2. **You build** - Try it yourself (~50 min)
+2. **You build** - Try it yourself (~30 min)
 3. **Compare** - What did we all discover? (20 min)
 4. **Improve** - Better approaches (15 min)
 5. **Reality check** - When this fails (10 min)
@@ -296,7 +296,7 @@ cd backend/Api && dotnet run
 
 <v-click>
 
-**Ready? Build time** ⏱️ (~50 min)
+**Ready? Build time** ⏱️ (~30 min)
 
 </v-click>
 
@@ -307,38 +307,6 @@ Questions before we start?
 
 Alright, go!
 -->
-
----
-layout: center
----
-
-# ⏰ 10 min
-
-Quick check - anyone blocked?
-
----
-layout: center
----
-
-# ⏰ 25 min
-
-Halfway point. How's it going?
-
----
-layout: center
----
-
-# ⏰ 40 min
-
-Start wrapping up. Get it to a working state.
-
----
-layout: center
----
-
-# ⏰ 50 min
-
-Time's up! Let's compare notes.
 
 ---
 layout: center
