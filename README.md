@@ -22,7 +22,19 @@
 
 ---
 
-## The Three Approaches
+## The Five Exercises
+
+### Exercise 0: The Messy Reality
+**Starting point**: Legacy code with no structure
+- **Context**: 138 lines in one file, global state, TODOs everywhere
+- **Challenge**: Try adding features to THIS
+- **Learning**: LLMs struggle 2-3x more on brownfield code
+
+**Why it matters**: Most real codebases look like this, not the clean examples.
+
+[View details →](docs/EXERCISE-0.md) | [View transcript →](transcripts/EXERCISE-0-TRANSCRIPT.md)
+
+---
 
 ### Exercise 1: Free-form Vibecoding
 **Prompt**: "Create a chatbot"
@@ -57,6 +69,18 @@
 **Result**: Best of both worlds—fast AND maintainable.
 
 [View template →](.prompts/NEW_FEATURE_TEMPLATE.md)
+
+---
+
+### Exercise 4: Brownfield Migration
+**Strategy**: Strangler Fig Pattern for legacy code
+- **Approach**: Don't rewrite, gradually replace
+- **Tactics**: New features clean, migrate old code when touching it
+- **Timeline**: Months of sustainable improvement, not weeks of chaos
+
+**Why it matters**: Bridges the gap between greenfield examples and your day job.
+
+[View migration guide →](docs/EXERCISE-4-BROWNFIELD-MIGRATION.md)
 
 ---
 
@@ -116,8 +140,8 @@ Participants **build a feature** using the template, experiencing vibecoding fir
 
 ```bash
 # Clone the repo
-git clone <repo-url>
-cd cl-sessie
+git clone https://github.com/MatthijsRademaker/cl-session-vibe-coding.git
+cd cl-session-vibe-coding
 
 # Install frontend dependencies
 cd frontend
@@ -136,17 +160,21 @@ dotnet run
 ### Branch Structure
 
 ```
-master (base layer)
-  └── exercise-1-freeform (zero constraints)
-      └── exercise-2-ddd-guardrails (architectural patterns)
-          └── exercise-3-prompt-engineering (templates)
+main (base layer)
+  ├── exercise-0-messy-legacy (brownfield starting point)
+  ├── exercise-1-freeform (zero constraints)
+  │     └── exercise-2-ddd-guardrails (architectural patterns)
+  │           └── exercise-3-prompt-engineering (templates)
+  │                 └── exercise-4-brownfield-migration (migration strategy)
 ```
 
 Switch between exercises:
 ```bash
-git checkout exercise-1-freeform    # See free-form approach
-git checkout exercise-2-ddd-guardrails  # See DDD approach
-git checkout exercise-3-prompt-engineering  # See template approach
+git checkout exercise-0-messy-legacy           # Messy legacy code
+git checkout exercise-1-freeform               # Free-form approach
+git checkout exercise-2-ddd-guardrails         # DDD approach
+git checkout exercise-3-prompt-engineering     # Template approach
+git checkout exercise-4-brownfield-migration   # Migration strategy
 ```
 
 ---
@@ -165,9 +193,11 @@ git checkout exercise-3-prompt-engineering  # See template approach
 - 📚 [**docs/CLAUDE.md**](docs/CLAUDE.md) - Architecture guide
 
 ### For Self-Study
+- 🗂️ [**docs/EXERCISE-0.md**](docs/EXERCISE-0.md) - Brownfield reality
 - 🔄 [**docs/EXERCISE-1.md**](docs/EXERCISE-1.md) - Free-form analysis
 - 🏗️ [**docs/EXERCISE-2.md**](docs/EXERCISE-2.md) - DDD deep-dive
 - 📝 [**docs/EXERCISE-3.md**](docs/EXERCISE-3.md) - Template benefits
+- 🌱 [**docs/EXERCISE-4-BROWNFIELD-MIGRATION.md**](docs/EXERCISE-4-BROWNFIELD-MIGRATION.md) - Migration strategy
 
 ---
 
