@@ -1,44 +1,137 @@
+using System.Collections.Concurrent;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// CORS - copied from StackOverflow, not sure if needed
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// Global message storage - TODO: move to database?
+var messages = new ConcurrentBag<ChatMsg>();
+var msgId = 0;
 
-app.MapGet("/weatherforecast", () =>
+// Chat endpoint - handles incoming messages
+app.MapPost("/api/chat", (ChatRequest request) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    // Validate input
+    if (string.IsNullOrEmpty(request.Message))
+        return Results.BadRequest("Message cannot be empty");
+
+    var msg = request.Message.ToLower();
+    string response;
+
+    // Response logic - TODO: make this smarter
+    if (msg.Contains("hello") || msg.Contains("hi"))
+    {
+        response = "Hi there! How can I help?";
+    }
+    else if (msg.Contains("bye"))
+    {
+        response = "Goodbye!";
+    }
+    else if (msg.Contains("help"))
+    {
+        response = "I'm a simple chatbot. Try saying hello!";
+    }
+    // Weather check - experimenting with features
+    else if (msg.Contains("weather"))
+    {
+        response = "I don't have weather data yet. Check back later!";
+    }
+    else
+    {
+        // Random responses - makes it feel more natural
+        var responses = new[] {
+            "That's interesting!",
+            "Tell me more...",
+            "I see.",
+            "Hmm, interesting point.",
+            "Can you elaborate?"
+        };
+        response = responses[Random.Shared.Next(responses.Length)];
+    }
+
+    // Store the user message
+    var userMsg = new ChatMsg
+    {
+        Id = Interlocked.Increment(ref msgId),
+        Content = request.Message,
+        Timestamp = DateTime.UtcNow,
+        IsBot = false,
+        UserName = request.UserName ?? "Anonymous" // FIXME: should we require username?
+    };
+    messages.Add(userMsg);
+
+    // Store bot response
+    var botMsg = new ChatMsg
+    {
+        Id = Interlocked.Increment(ref msgId),
+        Content = response,
+        Timestamp = DateTime.UtcNow,
+        IsBot = true,
+        UserName = "Bot"
+    };
+    messages.Add(botMsg);
+
+    return Results.Ok(new ChatResponse { Message = response, MessageId = botMsg.Id });
+});
+
+// Get message history
+app.MapGet("/api/messages", () =>
+{
+    // Return last 100 messages
+    var recentMessages = messages.OrderBy(m => m.Timestamp).TakeLast(100);
+    return Results.Ok(recentMessages);
+});
+
+// Health check endpoint - for monitoring
+app.MapGet("/api/health", () => Results.Ok(new { Status = "OK", Timestamp = DateTime.UtcNow }));
+
+// Old endpoint - keeping for backwards compatibility, but not using anymore
+// app.MapGet("/api/status", () => Results.Ok("Running"));
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+// Models - should probably move these to separate files
+public class ChatRequest
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public string Message { get; set; } = "";
+    public string? UserName { get; set; }
+}
+
+public class ChatResponse
+{
+    public string Message { get; set; } = "";
+    public int MessageId { get; set; }
+}
+
+// Message model
+public class ChatMsg
+{
+    public int Id { get; set; }
+    public string Content { get; set; } = "";
+    public DateTime Timestamp { get; set; }
+    public bool IsBot { get; set; }
+    public string UserName { get; set; } = "";
+
+    // Trying to add reactions - not implemented yet
+    // public List<string>? Reactions { get; set; }
 }
