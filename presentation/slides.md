@@ -11,9 +11,6 @@ mdc: true
 
 LLM-assisted coding: What works, what doesn't
 
-<div class="pt-12 text-sm opacity-75">
-Press Space to start →
-</div>
 
 <!--
 Hey! Today we're exploring LLM-assisted coding.
@@ -35,13 +32,6 @@ Not here to tell you it's amazing - you're going to try it and decide for yourse
 
 </v-clicks>
 
-<v-click>
-
-<div class="text-sm opacity-75 mt-8">
-Today: Hands-on. You decide what works.
-</div>
-
-</v-click>
 
 <!--
 Get a sense of the room.
@@ -60,7 +50,8 @@ That's perfect.
 **LLM-assisted coding** (vibecoding):
 - You describe what you want
 - LLM generates code
-- You review, iterate, ship
+- You review, describe some more, loop
+- Get frustrated
 
 **Questions**:
 - How much structure do you give the LLM?
@@ -69,11 +60,6 @@ That's perfect.
 
 </v-clicks>
 
-<v-click>
-
-**Today**: Try it yourself, see what happens
-
-</v-click>
 
 <!--
 Not trying to convince anyone.
@@ -83,7 +69,7 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 
 ---
 
-# Workshop Plan
+# Agenda
 
 <v-clicks>
 
@@ -95,14 +81,6 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 6. **Reality check** - When this fails (10 min)
 
 </v-clicks>
-
-<v-click>
-
-<div class="text-sm opacity-75 mt-8">
-~80% of the time is you coding
-</div>
-
-</v-click>
 
 <!--
 This is hands-on. Minimal talking from me.
@@ -151,7 +129,7 @@ Fast, but...
 
 # The Code
 
-```csharp {all|1-5|7-12|all}
+```csharp {all|1-5|7-14|all}
 // All in one file (Program.cs)
 var responses = new[] {
     "That's interesting!",
@@ -258,14 +236,6 @@ Some ideas:
 
 </v-clicks>
 
-<v-click>
-
-<div class="text-sm opacity-75 mt-8">
-No right answer. Just try it.
-</div>
-
-</v-click>
-
 <!--
 This is the experiment.
 
@@ -333,14 +303,6 @@ What did we discover?
 
 </v-clicks>
 
-<v-click>
-
-<div class="text-sm opacity-75 mt-8">
-Honest answers - no judgment
-</div>
-
-</v-click>
-
 <!--
 Get 3-4 people to share.
 
@@ -353,8 +315,6 @@ Listen for:
 ---
 
 # Common Patterns
-
-What I usually hear:
 
 <v-clicks>
 
@@ -554,8 +514,6 @@ Worth it? Depends on your project.
 
 **What would YOUR template include?**
 
-**When would you skip the template?**
-
 </v-clicks>
 
 <v-click>
@@ -635,8 +593,6 @@ Not the clean examples we showed.
 Try using LLM on messy codebase:
 
 <v-clicks>
-
-⏱️ **29 minutes** (vs 8-12 clean)
 
 🔄 **9 iterations** (vs 3-5 clean)
 
@@ -825,55 +781,6 @@ Be honest about limits.
 LLMs are great for patterns, bad for novelty.
 -->
 
----
-
-# Common Traps
-
-<v-clicks>
-
-**Assumptions**:
-- REST (not GraphQL)
-- Sync (not async)
-- In-memory (not Redis)
-- Happy path (no error handling)
-
-**You need to catch these**
-
-</v-clicks>
-
-<!--
-LLMs make reasonable guesses.
-
-But they're still guesses.
-
-Review everything.
--->
-
----
-
-# "Will I Forget How to Code?"
-
-<v-clicks>
-
-**If** you copy blindly: Yes ❌
-
-**If** you review and understand: No ✅
-
-</v-clicks>
-
-<v-click>
-
-Like Stack Overflow: tool, not replacement
-
-</v-click>
-
-<!--
-Real concern.
-
-The safeguard: always review, always understand.
-
-If you don't understand it, don't ship it.
--->
 
 ---
 
@@ -901,15 +808,6 @@ Just tools. Use them thoughtfully.
 
 # Try It
 
-<v-clicks>
-
-**Skeptics**: Try on a side project
-
-**Interested**: Create a template for YOUR patterns
-
-**Everyone**: Measure results, don't guess
-
-</v-clicks>
 
 <v-click>
 
