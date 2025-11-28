@@ -9,75 +9,113 @@ mdc: true
 
 # Vibecoding Workshop
 
-Building with LLMs: Free-form vs Template-driven
+LLM-assisted coding: What works, what doesn't
 
 <div class="pt-12 text-sm opacity-75">
 Press Space to start →
 </div>
 
 <!--
-Hey! This is a hands-on session about using LLMs to build code.
+Hey! Today we're exploring LLM-assisted coding.
 
-Not here to convince you it's amazing - just showing you two approaches and letting you decide.
+Not here to tell you it's amazing - you're going to try it and decide for yourself.
 -->
 
 ---
 
-# Quick Context
-
-You've probably tried ChatGPT/Claude for coding
+# Show of Hands
 
 <v-clicks>
 
-**Today**: Same task, two ways
-- Free-form: "Build me a chatbot"
-- Template: "Build me a chatbot following this structure..."
+**Used ChatGPT/Claude/Copilot for code?**
 
-**Goal**: See which one you'd actually use
+**Actually shipped the result?**
 
-</v-clicks>
-
-<!--
-Show of hands - who's used an LLM to write code before?
-
-Cool. Today we're comparing approaches, not selling you on AI.
--->
-
----
-
-# Workshop Flow (2hrs)
-
-<v-clicks>
-
-1. **Show**: Free-form result (messy but fast)
-2. **Show**: Template approach (structure)
-3. **Build**: You try the template (~50 min)
-4. **Compare**: Discuss what happened
-5. **Reality check**: When this fails
+**Would use it again?**
 
 </v-clicks>
 
 <v-click>
 
 <div class="text-sm opacity-75 mt-8">
-Most of the time is you building, not me talking
+Today: Hands-on. You decide what works.
 </div>
 
 </v-click>
 
 <!--
-This isn't a lecture. You'll spend most of the time coding.
+Get a sense of the room.
 
-I'll show you what happened when I built the same thing two ways, then you try it.
+Some will be experienced, some skeptical, some curious.
+
+That's perfect.
+-->
+
+---
+
+# The Concept
+
+<v-clicks>
+
+**LLM-assisted coding** (vibecoding):
+- You describe what you want
+- LLM generates code
+- You review, iterate, ship
+
+**Questions**:
+- How much structure do you give the LLM?
+- How do you keep quality high?
+- When does this actually help?
+
+</v-clicks>
+
+<v-click>
+
+**Today**: Try it yourself, see what happens
+
+</v-click>
+
+<!--
+Not trying to convince anyone.
+
+Just exploring: if you're going to use LLMs for code, how do you do it well?
+-->
+
+---
+
+# Workshop Plan
+
+<v-clicks>
+
+1. **Quick context** - I show what I built (5 min)
+2. **You build** - Try it yourself (~50 min)
+3. **Compare** - What did we all discover? (20 min)
+4. **Improve** - Better approaches (15 min)
+5. **Reality check** - When this fails (10 min)
+
+</v-clicks>
+
+<v-click>
+
+<div class="text-sm opacity-75 mt-8">
+~80% of the time is you coding
+</div>
+
+</v-click>
+
+<!--
+This is hands-on. Minimal talking from me.
+
+You'll learn more from trying than from listening.
 -->
 
 ---
 layout: center
 ---
 
-# Part 1: Free-Form Result
+# Context: What I Built
 
-What happens with zero constraints?
+Quick look at free-form LLM coding
 
 ---
 
@@ -92,15 +130,21 @@ Keep it simple.
 
 <v-click>
 
-**Result**: ✅ Works in 15 minutes
+**Result**: Working in 15 minutes ✅
 
 </v-click>
 
 <v-click>
 
-**But...**
+**Code quality**: 🤷
 
 </v-click>
+
+<!--
+I built this before the workshop to show you what happens with zero constraints.
+
+Fast, but...
+-->
 
 ---
 
@@ -125,216 +169,184 @@ app.MapPost("/api/chat", (ChatRequest request) => {
 
 <v-click>
 
-**Question**: Where would you add authentication?
+Everything inline. Where would auth go? Tests?
 
 </v-click>
 
 <!--
-Everything's inline. Business logic mixed with HTTP handling.
+Classic free-form result:
+- Works
+- Fast
+- But... structure?
 
-It works, but... where do things go as it grows?
+You'll see this yourself in a moment.
 -->
 
 ---
 
-# Free-Form Stats
+# Quick Stats
 
 | Metric | Value |
 |--------|-------|
 | Time | 15 min |
 | Files | 2 |
 | Tests | 0 |
-| Iterations | 7 (bugs found) |
+| Iterations | 7 |
 
 <v-click>
 
-**Reality**: Even "simple" took iteration
+**Reality**: Even simple code needed iteration
 
 </v-click>
 
 <!--
-Key point: LLMs aren't one-shot. You iterate.
+Point: LLMs aren't one-shot magic.
 
-But the structure? All over the place.
+You iterate, debug, refine.
+
+Now let's see what YOU build.
 -->
 
 ---
 layout: center
 ---
 
-# Part 2: Template Approach
+# Your Turn
 
-What if we gave the LLM structure?
-
----
-
-# The Template
-
-Instead of:
-> "Create a chatbot"
-
-We give:
-> "Using template.md, create a chatbot with:
-> - Vertical slice architecture
-> - Validation & error handling
-> - BDD tests"
-
-<v-click>
-
-**Template = Guardrails**
-
-</v-click>
-
-<!--
-The template tells the LLM:
-- Where files go
-- What quality looks like
-- What tests to write
-
-Not hoping for good code - requiring it.
--->
-
----
-
-# Template Structure
-
-```markdown
-Domain/Features/{FeatureName}/
-  ├── {Entity}.cs        # Business logic
-  ├── {UseCase}.cs       # Orchestration
-  └── I{Repo}.cs         # Interface
-
-Tests/Features/{FeatureName}/
-  └── {Feature}.feature  # Gherkin tests
-```
-
-<v-click>
-
-Each feature = isolated folder
-
-</v-click>
-
----
-
-# Template: Testing Required
-
-```gherkin
-Feature: Chat
-  Scenario: Send message
-    Given I have a conversation
-    When I send "Hello"
-    Then I get a response
-```
-
-<v-click>
-
-LLM generates code **and** tests
-
-</v-click>
-
----
-layout: center
----
-
-# Part 3: Your Turn
-
-Build time 🔨
+Build something with an LLM
 
 ---
 
 # The Assignment
 
-Pick **one** feature:
+Pick **one** feature to add to the chatbot:
 
 <v-clicks>
 
 **Option A: Message Reactions** ⭐
-Add emoji reactions (👍, ❤️, 😂)
+Add emoji reactions (👍, ❤️, 😂) to messages
 
 **Option B: User Profiles**
-Names + avatar colors
+Users have names + avatar colors
 
 **Option C: Message History**
-Last 50 messages on load
+Load last 50 messages when chat opens
 
 </v-clicks>
 
+<!--
+Pick whichever interests you.
+
+They're all similar difficulty.
+-->
+
 ---
 
-# How to Use the Template
+# How to Approach It
 
-```text
-Using .prompts/NEW_FEATURE_TEMPLATE.md,
-create Message Reactions.
+<v-clicks>
 
-Requirements:
-- Emoji reactions (👍, ❤️, 😂)
-- Store per message
-- Show counts
+**Up to you!**
 
-Follow template structure exactly.
-```
+Some ideas:
+- Free-form: "Add message reactions to this chatbot"
+- More specific: "Add reactions using X pattern..."
+- Very detailed: Write out full requirements
+
+**Goal**: See what works for YOU
+
+</v-clicks>
 
 <v-click>
 
-Then: iterate, debug, get it working
+<div class="text-sm opacity-75 mt-8">
+No right answer. Just try it.
+</div>
 
 </v-click>
 
+<!--
+This is the experiment.
+
+How much guidance do you give the LLM?
+
+Try your instinct. We'll compare notes after.
+-->
+
 ---
 
-# Setup Check
+# Setup
 
 ```bash
-# Branch
-git checkout exercise-2-ddd-guardrails
+# Clone
+git clone https://github.com/MatthijsRademaker/cl-session-vibe-coding.git
+cd cl-session-vibe-coding
+
+# Start on exercise-1 (simple chatbot)
+git checkout exercise-1-freeform
 
 # Frontend
-cd frontend && npm run dev
+cd frontend && npm install && npm run dev
 
 # Backend
 cd backend/Api && dotnet run
 
-# LLM ready?
+# LLM ready? (ChatGPT / Claude / Copilot)
 ```
 
 <v-click>
 
-**Ready? Let's build** ⏱️
+**Ready? Build time** ⏱️ (~50 min)
 
 </v-click>
 
----
-layout: center
----
+<!--
+Everyone set up?
 
-# ⏰ Checkpoint: 10 min
+Questions before we start?
 
-Quick check - anyone stuck?
-
----
-layout: center
----
-
-# ⏰ Checkpoint: 25 min
-
-Halfway. How's it going?
+Alright, go!
+-->
 
 ---
 layout: center
 ---
 
-# ⏰ Checkpoint: 40 min
+# ⏰ 10 min
 
-Wrap it up. We'll discuss in 5.
+Quick check - anyone blocked?
 
 ---
 layout: center
 ---
 
-# Part 4: Discussion
+# ⏰ 25 min
 
-What just happened?
+Halfway point. How's it going?
+
+---
+layout: center
+---
+
+# ⏰ 40 min
+
+Start wrapping up. Get it to a working state.
+
+---
+layout: center
+---
+
+# ⏰ 50 min
+
+Time's up! Let's compare notes.
+
+---
+layout: center
+---
+
+# Discussion
+
+What did we discover?
 
 ---
 
@@ -342,64 +354,178 @@ What just happened?
 
 <v-clicks>
 
-**Did it work?** (Bugs are fine)
+**Did it work?**
 
-**How many iterations?**
+**How many iterations with the LLM?**
 
-**Did you understand the code?**
+**What was hard? What was easy?**
+
+**Would you ship this?**
 
 </v-clicks>
 
 <v-click>
 
 <div class="text-sm opacity-75 mt-8">
-Honest answers - this isn't graded
+Honest answers - no judgment
 </div>
 
 </v-click>
 
+<!--
+Get 3-4 people to share.
+
+Listen for:
+- Structure problems
+- Iteration count
+- Confidence in the code
+-->
+
 ---
 
-# Common Pattern
+# Common Patterns
+
+What I usually hear:
 
 <v-clicks>
 
-✅ **Most finish in 30-40 min**
+✅ **Fast initial generation**
 
-✅ **Code is organized** (vs free-form mess)
+⚠️ **Lots of iteration** (5-10+ rounds)
 
-✅ **Some have tests**
+⚠️ **Structure all over the place**
 
-⚠️ **Still needed iteration** (normal!)
+⚠️ **Not sure where to add next feature**
+
+❓ **Would I ship this?** (mixed feelings)
 
 </v-clicks>
 
-<v-click>
+<!--
+This is the problem free-form hits:
+- Speed is great
+- But structure? Consistency? Tests?
 
-**Templates guide, not magic**
-
-</v-click>
-
----
-
-# The Numbers
-
-| Metric | Free-form | Template |
-|--------|-----------|----------|
-| Initial | 15 min | 20 min |
-| Files | 2 | ~15 |
-| Tests | 0 | Included |
-| Maintainability | 😬 | ✅ |
-
-<v-click>
-
-**Trade-off**: 5 min slower, way more organized
-
-</v-click>
+Sound familiar?
+-->
 
 ---
 
-# Code Organization
+# The Challenge
+
+<v-clicks>
+
+**LLM makes decisions**:
+- Where files go
+- How to structure code
+- What patterns to use
+- Whether to write tests
+
+**Problem**: Those decisions are inconsistent
+
+**Question**: How do we guide it better?
+
+</v-clicks>
+
+<!--
+This is the insight.
+
+You can use LLMs fast, but you need some way to guide them.
+
+So... how?
+-->
+
+---
+layout: center
+---
+
+# One Approach: Templates
+
+Encoding your standards
+
+---
+
+# The Idea
+
+Instead of:
+> "Add message reactions"
+
+You say:
+> "Using this template, add message reactions"
+
+<v-click>
+
+**Template** = Your structure, patterns, standards
+
+</v-click>
+
+<!--
+Let me show you what I mean.
+
+This is ONE approach - not the only one.
+-->
+
+---
+
+# Example Template
+
+```markdown
+## Structure
+
+Domain/Features/{FeatureName}/
+  ├── {Entity}.cs        # Business logic
+  ├── {UseCase}.cs       # Orchestration
+  └── I{Repo}.cs         # Interface
+
+Tests/Features/{FeatureName}/
+  └── {Feature}.feature  # Gherkin tests
+
+## Requirements
+- Validation on all inputs
+- Error handling with Result<T>
+- BDD tests for happy + error paths
+```
+
+<!--
+This tells the LLM:
+- Where files go
+- What patterns to use
+- What quality means
+
+It's YOUR conventions, codified.
+-->
+
+---
+
+# Template in Action
+
+```text
+Using .prompts/NEW_FEATURE_TEMPLATE.md,
+add message reactions.
+
+Requirements:
+- Emoji reactions (👍, ❤️, 😂)
+- Store per message
+- Show counts in UI
+
+Follow the template structure.
+```
+
+<v-click>
+
+LLM generates structured code + tests
+
+</v-click>
+
+<!--
+Same feature you just built.
+
+But now the LLM follows YOUR structure.
+-->
+
+---
+
+# Compare
 
 <div grid="~ cols-2 gap-4">
 
@@ -408,85 +534,134 @@ Honest answers - this isn't graded
 ## Free-form
 ```
 backend/
-  Program.cs  (everything)
+  Program.cs (everything)
 
 frontend/
   ChatBot.vue
 ```
 
-Add feature? 🤷 Where does it go?
+- Fast
+- Unstructured
+- Hard to extend
 
 </div>
 
 <div>
 
-## Template
+## Template-driven
 ```
-backend/
-  Features/
-    Chat/
-    Auth/  ← Add here
-
-frontend/
-  features/
-    chat/
-    auth/  ← Add here
+backend/Features/
+  Reactions/
+    Reaction.cs
+    UseCase.cs
+    IRepo.cs
+  Tests/
+    Reactions.feature
 ```
 
-Add feature? ✅ Obvious
+- Bit slower
+- Consistent
+- Clear where things go
 
 </div>
 
 </div>
 
+<!--
+Trade-off:
+- Lose 5-10 min upfront
+- Gain structure and consistency
+
+Worth it? Depends on your project.
+-->
+
 ---
-layout: center
----
 
-# Part 5: Reality Check
-
-When this doesn't work
-
----
-
-# ❌ Don't Use For
+# Discussion
 
 <v-clicks>
 
-**Novel algorithms**
-LLMs give you common solutions, not innovative ones
+**Would a template have helped you?**
 
-**Security stuff**
-Always review auth, crypto, SQL queries yourself
+**What would YOUR template include?**
 
-**Performance-critical**
-Optimizes for readability, not speed
-
-**Your specific domain**
-LLM doesn't know your business rules
-
-</v-clicks>
-
----
-
-# Common Assumptions
-
-LLMs guess:
-
-<v-clicks>
-
-- REST (not GraphQL)
-- Sync (not async)
-- In-memory (not Redis/queues)
-- Happy path (not error cases)
+**When would you skip the template?**
 
 </v-clicks>
 
 <v-click>
 
-**You need to catch these**
+<div class="text-sm opacity-75 mt-8">
+Template is in the repo: .prompts/NEW_FEATURE_TEMPLATE.md
+</div>
 
 </v-click>
+
+<!--
+This is the key question.
+
+There's no one-size-fits-all.
+
+What makes sense for YOUR codebase?
+-->
+
+---
+layout: center
+---
+
+# Reality Check
+
+When LLMs fail
+
+---
+
+# Don't Use For
+
+<v-clicks>
+
+**Novel algorithms**
+LLMs give common solutions, not innovative ones
+
+**Security-critical**
+Always review auth, crypto, SQL yourself
+
+**Performance-critical**
+Optimizes for readability, not speed
+
+**Your domain logic**
+LLM doesn't know your business
+
+</v-clicks>
+
+<!--
+Be honest about limits.
+
+LLMs are great for patterns, bad for novelty.
+-->
+
+---
+
+# Common Traps
+
+<v-clicks>
+
+**Assumptions**:
+- REST (not GraphQL)
+- Sync (not async)
+- In-memory (not Redis)
+- Happy path (no error handling)
+
+**You need to catch these**
+
+</v-clicks>
+
+<!--
+LLMs make reasonable guesses.
+
+But they're still guesses.
+
+Review everything.
+-->
 
 ---
 
@@ -496,51 +671,45 @@ LLMs guess:
 
 **If** you copy blindly: Yes ❌
 
-**If** you review everything: No ✅
+**If** you review and understand: No ✅
 
 </v-clicks>
 
 <v-click>
 
-Like Stack Overflow - tool, not crutch
+Like Stack Overflow: tool, not replacement
 
 </v-click>
 
+<!--
+Real concern.
+
+The safeguard: always review, always understand.
+
+If you don't understand it, don't ship it.
+-->
+
 ---
 
-# Safeguards
+# Takeaways
 
 <v-clicks>
 
-1. Review every line
-2. Ask LLM to explain
-3. Code review with team
-4. Build some things from scratch
-5. Use for boilerplate, not learning
+**LLMs**: Fast, but need guidance
 
-</v-clicks>
+**Templates**: One way to add structure
 
----
-layout: center
----
-
-# Wrap-Up
-
----
-
-# What We Saw
-
-<v-clicks>
-
-**Free-form**: Fast (15 min), messy
-
-**Template**: Slightly slower (20 min), organized
-
-**Key**: Templates encode your standards
+**Your approach**: Whatever works for you
 
 **Reality**: Still needs review, iteration
 
 </v-clicks>
+
+<!--
+No silver bullet.
+
+Just tools. Use them thoughtfully.
+-->
 
 ---
 
@@ -548,11 +717,11 @@ layout: center
 
 <v-clicks>
 
-**Skeptics**: Side project, one template
+**Skeptics**: Try on a side project
 
-**Believers**: Read WHEN_NOT_TO_USE.md
+**Interested**: Create a template for YOUR patterns
 
-**Everyone**: Measure, don't guess
+**Everyone**: Measure results, don't guess
 
 </v-clicks>
 
@@ -571,13 +740,13 @@ Repo: github.com/MatthijsRademaker/cl-session-vibe-coding
 <v-clicks>
 
 **"Which LLM?"**
-Claude, GPT-4, Copilot - try a few
+Try a few. Claude, GPT-4, Copilot.
 
-**"Replace juniors?"**
-No. You need experience to review
+**"Replace developers?"**
+No. Review takes experience.
 
-**"How customize template?"**
-It's markdown. Change it.
+**"How to customize template?"**
+It's markdown. Fork it, change it.
 
 </v-clicks>
 
@@ -587,14 +756,14 @@ layout: center
 
 # Thanks
 
-Try it. Decide for yourself.
+Experiment. Decide for yourself.
 
 <div class="text-sm opacity-75 mt-8">
 github.com/MatthijsRademaker/cl-session-vibe-coding
 </div>
 
 <!--
-Slides are in the repo if you want to review.
-
 Good luck!
+
+Reach out if you have questions.
 -->
