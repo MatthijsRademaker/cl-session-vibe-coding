@@ -912,3 +912,58 @@ Good luck!
 
 Reach out if you have questions.
 -->
+
+---
+layout: center
+class: text-center
+---
+
+# One More Thing...
+
+<v-click>
+
+<div class="text-4xl mt-12 mb-8">
+🤖
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="text-2xl font-bold">
+This entire workshop was vibecoded.
+</div>
+
+</v-click>
+
+<v-clicks>
+
+**All 5 exercises** - Generated with Claude Code
+
+**All documentation** - Written with LLM assistance
+
+**This presentation** - Created using templates
+
+**The transcripts** - Real LLM conversations
+
+**The migration guide** - Vibecoded
+
+</v-clicks>
+
+<v-click>
+
+<div class="text-sm opacity-75 mt-8">
+Total time: ~4 hours. Lines of code: ~5000.
+</div>
+
+</v-click>
+
+<!--
+This is the proof.
+
+Not theory. Practice.
+
+The workshop you just experienced was built the way we taught you.
+
+Questions?
+-->
