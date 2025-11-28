@@ -159,6 +159,55 @@ You'll see this yourself in a moment.
 
 ---
 
+# The Frontend
+
+```vue {all|1-9|11-18|20-26|all}
+<script setup lang="ts">
+interface Message {
+  id: number
+  text: string
+  sender: 'user' | 'bot'
+  timestamp: Date
+}
+
+const messages = ref<Message[]>([...])
+const inputMessage = ref('')
+let messageIdCounter = 2
+
+const sendMessage = async () => {
+  // Add user message
+  messages.value.push(userMessage)
+
+  // Call backend API
+  const response = await fetch('http://localhost:5000/api/chat', {
+    method: 'POST',
+    body: JSON.stringify({ message: userInput })
+  })
+
+  // Add bot response
+  messages.value.push(botMessage)
+}
+</script>
+```
+
+<v-click>
+
+All state in one component. Where would user profiles go?
+
+</v-click>
+
+<!--
+Frontend also inline:
+- All in ChatBot.vue
+- No composables
+- Hardcoded API URL
+- Global message counter
+
+Same pattern as backend.
+-->
+
+---
+
 # Quick Stats
 
 | Metric | Value |
