@@ -636,17 +636,17 @@ Try using LLM on messy codebase:
 
 <v-clicks>
 
-⏱️ **20-30 minutes** (vs 8-12 clean)
+⏱️ **29 minutes** (vs 8-12 clean)
 
-🔄 **10-15 iterations** (vs 3-5 clean)
+🔄 **9 iterations** (vs 3-5 clean)
+
+📄 **[See full transcript](https://github.com/MatthijsRademaker/cl-session-vibe-coding/blob/exercise-0-messy-legacy/transcripts/EXERCISE-0-TRANSCRIPT.md)**
 
 ❌ **LLM suggests clean patterns that don't fit**
-"Create a ReactionService" (but there are no services!)
 
-❌ **Unclear where code should go**
-In Program.cs? New file? Which one?
+❌ **Data structure conflicts** (ConcurrentBag limitations)
 
-❌ **Each addition makes it messier**
+❌ **Cascading breaking changes**
 
 </v-clicks>
 

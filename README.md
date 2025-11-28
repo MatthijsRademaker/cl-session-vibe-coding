@@ -32,7 +32,7 @@
 
 **Why it matters**: Most real codebases look like this, not the clean examples.
 
-[View details →](docs/EXERCISE-0.md)
+[View details →](docs/EXERCISE-0.md) | [View transcript →](transcripts/EXERCISE-0-TRANSCRIPT.md)
 
 ---
 
