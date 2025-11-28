@@ -91,7 +91,8 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 2. **You build** - Try it yourself (~30 min)
 3. **Compare** - What did we all discover? (20 min)
 4. **Improve** - Better approaches (15 min)
-5. **Reality check** - When this fails (10 min)
+5. **Brownfield reality** - Legacy code challenges (15 min)
+6. **Reality check** - When this fails (10 min)
 
 </v-clicks>
 
@@ -571,6 +572,223 @@ This is the key question.
 There's no one-size-fits-all.
 
 What makes sense for YOUR codebase?
+-->
+
+---
+layout: center
+---
+
+# But Wait...
+
+There's a problem
+
+---
+
+# The Missing Reality
+
+Everything so far assumed **greenfield** code:
+- Clean structure
+- Consistent patterns
+- Small files
+- Clear organization
+
+**Real world**: You're dropped into **legacy** code.
+
+<!--
+This is the gap.
+
+All examples were greenfield. Most work is brownfield.
+-->
+
+---
+
+# Exercise 0: Legacy Code
+
+```csharp
+// Program.cs - All 138 lines in one file
+var messages = new ConcurrentBag<ChatMsg>();
+
+app.MapPost("/api/chat", (ChatRequest request) => {
+    // 50 lines of inline logic
+    // TODO: move to service?
+    // FIXME: handle edge cases
+    // Commented-out experiments
+    // Inconsistent patterns
+});
+
+// Models at bottom
+public class ChatMsg { ... }
+```
+
+**Try adding reactions to THIS**
+
+<!--
+This is what most codebases look like.
+
+Not the clean examples we showed.
+-->
+
+---
+
+# What Happens
+
+Try using LLM on messy codebase:
+
+<v-clicks>
+
+⏱️ **20-30 minutes** (vs 8-12 clean)
+
+🔄 **10-15 iterations** (vs 3-5 clean)
+
+❌ **LLM suggests clean patterns that don't fit**
+"Create a ReactionService" (but there are no services!)
+
+❌ **Unclear where code should go**
+In Program.cs? New file? Which one?
+
+❌ **Each addition makes it messier**
+
+</v-clicks>
+
+<!--
+This is the reality most participants will face.
+
+LLMs are 2-3x slower on brownfield.
+-->
+
+---
+
+# The Gap
+
+<div grid="~ cols-2 gap-8">
+
+<div>
+
+## Greenfield
+✅ 8-12 min to add feature
+✅ 3-5 iterations
+✅ Clear structure
+✅ LLM thrives
+
+**Workshop so far**
+
+</div>
+
+<div>
+
+## Brownfield
+❌ 20-30 min to add feature
+❌ 10-15 iterations
+❌ Messy structure
+❌ LLM struggles
+
+**Your day job**
+
+</div>
+
+</div>
+
+**Question**: How do you bridge this gap?
+
+<!--
+This is the real challenge.
+
+Templates help, but what about existing mess?
+-->
+
+---
+
+# Strangler Fig Strategy
+
+**Don't rewrite. Gradually replace.**
+
+```
+┌──────────────────────────────────────┐
+│ Legacy Code (Program.cs)             │
+│ /api/chat ← OLD (leave it)           │
+│                                      │
+│ New Features (Clean)                 │
+│ /api/messages/reactions ← NEW        │
+│ /api/users/profiles ← NEW            │
+│                                      │
+│ Over time, migrate when you touch... │
+└──────────────────────────────────────┘
+```
+
+<v-clicks>
+
+1. **New features → Clean architecture** (use template)
+2. **Old features → Leave as-is** (if they work)
+3. **Bug fixes → Migrate that piece** (opportunistic)
+
+</v-clicks>
+
+<!--
+Named after strangler fig trees.
+
+They gradually replace their host tree.
+
+Same strategy for code.
+-->
+
+---
+
+# Timeline
+
+**Month 1**: All new features in clean architecture
+- Legacy: 90%, Clean: 10%
+- Feature speed: 18 min average
+
+**Month 3**: Migrate a few old pieces when fixing bugs
+- Legacy: 60%, Clean: 40%
+- Feature speed: 14 min average
+
+**Month 6**: Most code is clean
+- Legacy: 30%, Clean: 70%
+- Feature speed: 10 min average
+
+**Key**: Legacy shrinks naturally over time
+
+<!--
+This is realistic migration.
+
+Not a 3-month rewrite project.
+
+Gradual, sustainable improvement.
+-->
+
+---
+
+# Brownfield Takeaways
+
+<v-clicks>
+
+**Reality**: Most code is messy, not clean
+
+**LLMs struggle** with unstructured code (2-3x slower)
+
+**Templates help** but can't fix fundamental mess
+
+**Strategy**: Strangler fig (new clean, migrate gradually)
+
+**Timeline**: Months, not weeks
+
+</v-clicks>
+
+<v-click>
+
+<div class="text-sm opacity-75 mt-8">
+See Exercise 0 and Exercise 4 in the repo
+</div>
+
+</v-click>
+
+<!--
+This is the honest reality check.
+
+Vibecoding isn't magic on legacy code.
+
+But there IS a path forward.
 -->
 
 ---
