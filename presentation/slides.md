@@ -26,8 +26,7 @@ Not here to tell you it's amazing - you're going to try it and decide for yourse
 
 **Used an LLM for code?**
 
-**Would use it again?**
-
+**Still uses it?**
 </v-clicks>
 
 
@@ -41,21 +40,20 @@ That's perfect.
 
 ---
 
-# The Concept
+# Vibecoding
 
 <v-clicks>
 
-**LLM-assisted coding** (vibecoding):
 - You describe what you want
 - LLM generates code
-- You review, describe some more, loop
+- You review
+- Say it is not up to standard
+- Loop
 - Get frustrated
 
 **Questions**:
 - How much structure do you give the LLM?
-- How do you keep quality high?
-- When does this actually help?
-
+- How much context do you give the LLM?
 </v-clicks>
 
 
@@ -67,12 +65,12 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 
 ---
 
-# Agenda
+# How to
 
 <v-clicks>
 
-1. **Quick context** - I show what I built (5 min)
-2. **You build** - Try it yourself (~30 min)
+1. **Quick intro** - I show what I built (5 min)
+2. **You navigate** - Try it yourself (~30 min)
 3. **Compare** - What did we all discover? (20 min)
 4. **Improve** - Better approaches (15 min)
 5. **Brownfield reality** - Legacy code challenges (15 min)
