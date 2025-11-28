@@ -1,20 +1,21 @@
-# Frontend
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
+# Dependencies
+node_modules/
 
-# Backend
-backend/**/bin/
-backend/**/obj/
-backend/**/*.user
+# Slidev
+dist/
+.slidev/
+slides-export.pdf
+
+# OS
+.DS_Store
+Thumbs.db
 
 # IDE
-.vs/
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS
-.DS_Store
-Thumbs.db
+# .NET build artifacts
+backend/**/bin/
+backend/**/obj/
