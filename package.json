@@ -1,0 +1,19 @@
+{
+  "name": "cl-sessie",
+  "version": "1.0.0",
+  "description": "**A hands-on, evidence-based workshop** for experienced developers who are skeptical about LLM-assisted coding.",
+  "main": "index.js",
+  "scripts": {
+    "slides": "slidev slides.md",
+    "slides:build": "slidev build slides.md",
+    "slides:export": "slidev export slides.md"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@slidev/cli": "^52.10.0",
+    "@slidev/theme-default": "^0.25.0"
+  }
+}
