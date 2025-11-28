@@ -4,9 +4,9 @@
   "description": "**A hands-on, evidence-based workshop** for experienced developers who are skeptical about LLM-assisted coding.",
   "main": "index.js",
   "scripts": {
-    "slides": "slidev slides.md",
-    "slides:build": "slidev build slides.md",
-    "slides:export": "slidev export slides.md"
+    "slides": "slidev presentation/slides.md",
+    "slides:build": "slidev build presentation/slides.md",
+    "slides:export": "slidev export presentation/slides.md"
   },
   "keywords": [],
   "author": "",
