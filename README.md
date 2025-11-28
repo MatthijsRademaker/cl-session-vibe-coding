@@ -10,9 +10,9 @@
 
 ### ❌ Not Another "AI is Amazing" Talk
 - No hype or cheerleading
-- Honest about limitations ([see WHEN_NOT_TO_USE.md](WHEN_NOT_TO_USE.md))
-- Evidence-based comparisons ([see METRICS.md](METRICS.md))
-- Real maintenance scenarios ([see MAINTENANCE_CHALLENGES.md](MAINTENANCE_CHALLENGES.md))
+- Honest about limitations ([see docs/WHEN_NOT_TO_USE.md](docs/WHEN_NOT_TO_USE.md))
+- Evidence-based comparisons ([see docs/METRICS.md](docs/METRICS.md))
+- Real maintenance scenarios ([see docs/MAINTENANCE_CHALLENGES.md](docs/MAINTENANCE_CHALLENGES.md))
 
 ### ✅ Practical, Hands-On Learning
 - Build the same feature 3 different ways
@@ -60,37 +60,47 @@
 
 ---
 
-## Workshop Structure (4 hours)
+## Workshop Structure (2 hours)
 
-### Part 1: The Hook (30 min)
-- Live demo: Build something impressive with LLM
-- Challenge: "You try it without LLM"
-- Compare results
+> **📋 For Instructors**: See [docs/WORKSHOP_HANDS_ON.md](docs/WORKSHOP_HANDS_ON.md) for complete facilitation guide with timing, troubleshooting, and what to prepare.
+>
+> **📋 For Participants**: See [docs/PARTICIPANT_GUIDE.md](docs/PARTICIPANT_GUIDE.md) for setup instructions and how to use the template.
 
-### Part 2: Exercise 1 - Free-form (45 min)
-- Review Exercise 1 code
-- Discuss: What worked? What's concerning?
-- **Your turn**: Add a feature (track your time)
+### Format: Hands-On Learning
 
-### Part 3: Exercise 2 - DDD (45 min)
-- Review Exercise 2 architecture
-- Compare with Exercise 1
-- **Your turn**: Same feature, different architecture
+Participants **build a feature** using the template, experiencing vibecoding firsthand.
 
-### Part 4: Exercise 3 - Templates (60 min)
-- Introduce template approach
-- **Your turn**: Use template for new feature
-- Compare all three
+### 1. Opening: The Problem (15 min)
+- Show Exercise 1 free-form result
+- Discuss concerns (all in one file, no tests)
+- "What if we could keep speed but add structure?"
 
-### Part 5: Maintenance Reality (30 min)
-- Work through maintenance challenges
-- See which architecture holds up best
-- Discussion: Long-term costs
+### 2. Introduce the Template (10 min)
+- Walk through `.prompts/NEW_FEATURE_TEMPLATE.md`
+- Architecture, quality requirements, testing
+- "This guides the LLM to your standards"
 
-### Part 6: Honest Discussion (30 min)
+### 3. Hands-On: Build with Template (50 min) 👩‍💻
+- **Participants choose**: Message Reactions, User Profiles, or Message History
+- Use template to guide LLM
+- Work independently or in pairs
+- Instructors help with troubleshooting
+
+### 4. Comparison & Discussion (20 min)
+- Share results: What worked? What broke?
+- Show metrics: Speed, structure, tests
+- Key insight: "Templates guide, not magic"
+
+### 5. Pitfalls & Honesty (15 min)
 - When NOT to use vibecoding
-- Addressing concerns (security, skill atrophy, etc.)
+- Security, performance, skill atrophy concerns
+- "You still need to understand the code"
+
+### 6. Wrap-Up (10 min)
+- Takeaways and next steps
 - Q&A
+
+**Note**: Exercise 2 (DDD) provides the starting architecture for the hands-on portion. Exercise 1 (free-form) is shown for comparison but not built live.
 
 ---
 
@@ -144,17 +154,20 @@ git checkout exercise-3-prompt-engineering  # See template approach
 ## Key Documents
 
 ### For Participants
-- 📊 [**METRICS.md**](METRICS.md) - Quantifiable comparisons (time, LOC, quality)
-- 🔧 [**MAINTENANCE_CHALLENGES.md**](MAINTENANCE_CHALLENGES.md) - Hands-on scenarios
-- ⚠️ [**WHEN_NOT_TO_USE.md**](WHEN_NOT_TO_USE.md) - Honest limitations
+- 📊 [**docs/METRICS.md**](docs/METRICS.md) - Quantifiable comparisons (time, LOC, quality)
+- 🔧 [**docs/MAINTENANCE_CHALLENGES.md**](docs/MAINTENANCE_CHALLENGES.md) - Hands-on scenarios
+- ⚠️ [**docs/WHEN_NOT_TO_USE.md**](docs/WHEN_NOT_TO_USE.md) - Honest limitations
 - 💬 [**transcripts/**](transcripts/) - Actual LLM conversations
 
-### For Implementers
+### For Instructors
+- 🎯 [**WORKSHOP_GUIDE_2HR.md**](WORKSHOP_GUIDE_2HR.md) - Complete 2-hour workshop script
 - 📋 [**.prompts/NEW_FEATURE_TEMPLATE.md**](.prompts/NEW_FEATURE_TEMPLATE.md) - Reusable template
-- 📚 [**CLAUDE.md**](CLAUDE.md) - Architecture guide
-- 🔄 [**EXERCISE-1.md**](EXERCISE-1.md) - Free-form analysis
-- 🏗️ [**backend/EXERCISE-2.md**](backend/EXERCISE-2.md) - DDD deep-dive
-- 📝 [**EXERCISE-3.md**](EXERCISE-3.md) - Template benefits
+- 📚 [**docs/CLAUDE.md**](docs/CLAUDE.md) - Architecture guide
+
+### For Self-Study
+- 🔄 [**docs/EXERCISE-1.md**](docs/EXERCISE-1.md) - Free-form analysis
+- 🏗️ [**docs/EXERCISE-2.md**](docs/EXERCISE-2.md) - DDD deep-dive
+- 📝 [**docs/EXERCISE-3.md**](docs/EXERCISE-3.md) - Template benefits
 
 ---
 
@@ -205,7 +218,7 @@ From the exercises:
 
 **Break-even point**: Exercise 3 becomes faster than Exercise 1 after ~12 features.
 
-[See full metrics →](METRICS.md)
+[See full metrics →](docs/METRICS.md)
 
 ---
 
@@ -214,26 +227,26 @@ From the exercises:
 ### Common Concerns Addressed
 
 **"Will I forget how to code?"**
-→ Depends how you use it. [Read more](WHEN_NOT_TO_USE.md#skill-atrophy-real-concern)
+→ Depends how you use it. [Read more](docs/WHEN_NOT_TO_USE.md#skill-atrophy-real-concern)
 
 **"What about security?"**
-→ Always review security-critical code. [Read more](WHEN_NOT_TO_USE.md#3-security-sensitive-code)
+→ Always review security-critical code. [Read more](docs/WHEN_NOT_TO_USE.md#3-security-sensitive-code)
 
 **"LLMs make mistakes"**
-→ Yes. That's why you review. [See examples](WHEN_NOT_TO_USE.md)
+→ Yes. That's why you review. [See examples](docs/WHEN_NOT_TO_USE.md)
 
 **"This is just hype"**
-→ This workshop is evidence-based. [See metrics](METRICS.md)
+→ This workshop is evidence-based. [See metrics](docs/METRICS.md)
 
 **"My domain is too complex"**
-→ LLMs handle patterns, you handle domain. [Read more](WHEN_NOT_TO_USE.md#4-company-specific-business-logic)
+→ LLMs handle patterns, you handle domain. [Read more](docs/WHEN_NOT_TO_USE.md#4-company-specific-business-logic)
 
 ---
 
 ## Workshop Materials
 
 ### Instructor Guide
-- [Workshop flow and timing](WORKSHOP_IMPROVEMENTS.md)
+- [Workshop flow and timing](docs/WORKSHOP_IMPROVEMENTS.md)
 - Discussion prompts
 - Common questions and answers
 
@@ -304,11 +317,11 @@ Built to convince skeptical developers through **experience**, not **evangelism*
 ## Quick Links
 
 - 🚀 [Get started](#getting-started)
-- 📊 [See the data](METRICS.md)
-- ⚠️ [Know the limits](WHEN_NOT_TO_USE.md)
+- 📊 [See the data](docs/METRICS.md)
+- ⚠️ [Know the limits](docs/WHEN_NOT_TO_USE.md)
 - 💬 [Read real conversations](transcripts/)
 - 📋 [Get the template](.prompts/NEW_FEATURE_TEMPLATE.md)
-- 🔧 [Try the challenges](MAINTENANCE_CHALLENGES.md)
+- 🔧 [Try the challenges](docs/MAINTENANCE_CHALLENGES.md)
 
 ---
 
