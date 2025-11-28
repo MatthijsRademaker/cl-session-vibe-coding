@@ -24,9 +24,7 @@ Not here to tell you it's amazing - you're going to try it and decide for yourse
 
 <v-clicks>
 
-**Used ChatGPT/Claude/Copilot for code?**
-
-**Actually shipped the result?**
+**Used an LLM for code?**
 
 **Would use it again?**
 
