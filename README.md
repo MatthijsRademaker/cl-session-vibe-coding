@@ -116,8 +116,8 @@ Participants **build a feature** using the template, experiencing vibecoding fir
 
 ```bash
 # Clone the repo
-git clone <repo-url>
-cd cl-sessie
+git clone https://github.com/MatthijsRademaker/cl-session-vibe-coding.git
+cd cl-session-vibe-coding
 
 # Install frontend dependencies
 cd frontend
