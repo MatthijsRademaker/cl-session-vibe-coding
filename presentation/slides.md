@@ -125,26 +125,42 @@ Fast, but...
 
 # The Code
 
-```csharp {all|1-5|7-14|all}
-// All in one file (Program.cs)
+```csharp {all|1-10|12-26|all}
+// All in one file (Program.cs) - 87 lines
 var responses = new[] {
-    "That's interesting!",
-    "Tell me more..."
+    "That's an interesting point! Tell me more.",
+    "I understand. How does that make you feel?",
+    "Fascinating! I'd love to hear your thoughts...",
+    // ... 7 more responses
 };
 
+var greetings = new[] { "hello", "hi", "hey", "greetings" };
+var questions = new[] { "how are you", "what's up" };
+
 app.MapPost("/api/chat", (ChatRequest request) => {
-    var message = request.Message.ToLower();
+    var userMessage = request.Message.ToLower().Trim();
 
-    if (message.Contains("hello"))
-        return new ChatResponse("Hi there!");
+    if (greetings.Any(g => userMessage.Contains(g)))
+        botResponse = "Hello! How can I help you?";
+    else if (questions.Any(q => userMessage.Contains(q)))
+        botResponse = "I'm doing great! How about you?";
+    else if (userMessage.Contains("bye"))
+        botResponse = "Goodbye! Come back anytime!";
+    else if (userMessage.Contains("?"))
+        botResponse = "Great question! " + responses[Random.Shared.Next()];
+    else
+        botResponse = responses[Random.Shared.Next()];
 
-    return new ChatResponse(responses[Random.Shared.Next()]);
+    return new ChatResponse(botResponse);
 });
+
+record ChatRequest(string Message);
+record ChatResponse(string Response);
 ```
 
 <v-click>
 
-Everything inline. Where would auth go? Tests?
+Everything inline. If-else chains. Where would new features go?
 
 </v-click>
 
