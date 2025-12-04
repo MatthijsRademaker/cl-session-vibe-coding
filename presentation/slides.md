@@ -125,7 +125,7 @@ Fast, but...
 
 # The Code
 
-```csharp {all|1-10|12-26|all}
+```csharp {all|1-10|12-26|all}{maxHeight: '400px'}
 // All in one file (Program.cs) - 87 lines
 var responses = new[] {
     "That's an interesting point! Tell me more.",
@@ -177,7 +177,7 @@ You'll see this yourself in a moment.
 
 # The Frontend
 
-```vue {all|1-9|11-18|20-26|all}
+```vue {*}{maxHeight: '400px'}
 <script setup lang="ts">
 interface Message {
   id: number
