@@ -69,12 +69,12 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 
 <v-clicks>
 
-1. **The Problem** - Free-form prompting pain (5 min)
-2. **The Solution** - Good architecture + templates (10 min)
-3. **The Template** - Your reusable prompt guide (25 min)
-4. **Hands-on** - Build a feature using templates (~40 min)
-5. **Brownfield reality** - Legacy code challenges (30 min)
-6. **Reality check** - When this fails (10 min)
+1. **The Problem** - Free-form prompting pain 
+2. **The Solution** - Good architecture + templates
+3. **The Template** - Your reusable prompt guide 
+4. **Hands-on** - Build a feature using templates
+5. **Brownfield reality** - Legacy code challenges 
+6. **Reality check** - When this fails 
 
 </v-clicks>
 
@@ -125,7 +125,7 @@ Fast, but...
 
 # The Code
 
-```csharp {all|1-10|12-26|all}{maxHeight: '400px'}
+```csharp {all|1-10|12-27|29-30}{maxHeight: '400px'}
 // All in one file (Program.cs) - 87 lines
 var responses = new[] {
     "That's an interesting point! Tell me more.",
@@ -177,7 +177,7 @@ You'll see this yourself in a moment.
 
 # The Frontend
 
-```vue {*}{maxHeight: '400px'}
+```vue {all|2-7|13-25|11|all}{maxHeight: '400px'}
 <script setup lang="ts">
 interface Message {
   id: number
@@ -485,12 +485,7 @@ cd cl-session-vibe-coding
 # Start with clean architecture base (exercise-2/3)
 git checkout exercise-2-ddd-guardrails
 
-# Frontend
-cd frontend && npm install && npm run dev
-
-# Backend
-cd backend/Api && dotnet run
-
+docker compose up -d
 # LLM ready? (ChatGPT / Claude / Copilot)
 ```
 
