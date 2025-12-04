@@ -7,7 +7,10 @@ Slidev presentation for the Vibecoding Workshop.
 ### Development Mode (Presenter View)
 
 ```bash
+<<<<<<< HEAD
 cd presentation
+=======
+>>>>>>> feat/improved-slides
 npm run slides
 ```
 
@@ -23,8 +26,11 @@ This opens:
 ### Build Static Site
 
 ```bash
+<<<<<<< HEAD
 cd presentation
 cd presentation
+=======
+>>>>>>> feat/improved-slides
 npm run slides:build
 ```
 
@@ -33,8 +39,11 @@ Outputs to `dist/` - deploy to any static hosting.
 ### Export to PDF
 
 ```bash
+<<<<<<< HEAD
 cd presentation
 cd presentation
+=======
+>>>>>>> feat/improved-slides
 npm run slides:export
 ```
 
@@ -157,7 +166,10 @@ Use timer in presenter mode to stay on track.
 ```bash
 # Reinstall dependencies
 npm install
+<<<<<<< HEAD
 cd presentation
+=======
+>>>>>>> feat/improved-slides
 npm run slides
 ```
 
@@ -173,8 +185,11 @@ npx slidev slides.md --port 3031
 ```bash
 # Install playwright (required for PDF)
 npx playwright install chromium
+<<<<<<< HEAD
 cd presentation
 cd presentation
+=======
+>>>>>>> feat/improved-slides
 npm run slides:export
 ```
 
