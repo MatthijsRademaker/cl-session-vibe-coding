@@ -1,33 +1,16 @@
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-      target: development
-    container_name: chatbot-backend
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    working_dir: /src/Api
+    volumes:
+      - ./backend:/src
+      - ~/.aspnet/https:/https:ro
+    command: ["dotnet", "watch", "run", "--no-launch-profile"]
+    environment:
+      ASPNETCORE_URLS: "http://0.0.0.0:5001"
     ports:
       - "5000:5000"
-    volumes:
-      # Mount source code for hot reloading
-      - ./backend:/app:delegated
-      # Exclude build artifacts to prevent conflicts with host machine
-      - /app/Api/bin
-      - /app/Api/obj
-      - /app/Domain/bin
-      - /app/Domain/obj
-      - /app/Application/bin
-      - /app/Application/obj
-      - /app/Infrastructure/bin
-      - /app/Infrastructure/obj
-      - /app/Tests/bin
-      - /app/Tests/obj
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-    networks:
-      - chatbot-network
-    stdin_open: true
-    tty: true
+      - "5001:5001"
 
   frontend:
     build:
@@ -44,14 +27,7 @@ services:
       - /app/node_modules
       - /app/dist
     environment:
-      - VITE_API_URL=http://localhost:5000
-    networks:
-      - chatbot-network
+      - VITE_API_URL=http://localhost:5001
     depends_on:
       - backend
     stdin_open: true
-    tty: true
-
-networks:
-  chatbot-network:
-    driver: bridge

@@ -1,5 +1,5 @@
 # Use .NET SDK for development with hot reload support
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS development
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS development
 
 WORKDIR /app
 
@@ -18,11 +18,10 @@ RUN dotnet restore
 # This ensures the container always uses the latest code from your host
 
 # Expose the HTTP port
-EXPOSE 5000
+EXPOSE 5001
 
 # Set environment variables for development
 ENV ASPNETCORE_ENVIRONMENT=Development
-ENV ASPNETCORE_URLS=http://+:5000
 ENV DOTNET_USE_POLLING_FILE_WATCHER=1
 
 # Run with hot reload using dotnet watch
