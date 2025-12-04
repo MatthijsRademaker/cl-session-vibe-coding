@@ -1,0 +1,34 @@
+services:
+  backend:
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    working_dir: /src/Api
+    volumes:
+      - ./backend:/src
+      - ~/.aspnet/https:/https:ro
+    command: ["dotnet", "watch", "run", "--no-launch-profile"]
+    environment:
+      ASPNETCORE_URLS: "http://0.0.0.0:5001"
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    container_name: chatbot-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      # Mount source code for hot reloading
+      - ./frontend:/app:delegated
+      # Exclude node_modules and build artifacts
+      - /app/node_modules
+      - /app/dist
+    environment:
+      - VITE_API_URL=http://localhost:5001
+    depends_on:
+      - backend
+    stdin_open: true

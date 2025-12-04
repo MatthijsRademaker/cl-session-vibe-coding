@@ -69,28 +69,28 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 
 <v-clicks>
 
-1. **Quick intro** - I show what I built (5 min)
-2. **You navigate** - Try it yourself (~30 min)
-3. **Compare** - What did we all discover? (20 min)
-4. **Improve** - Better approaches (15 min)
-5. **Brownfield reality** - Legacy code challenges (15 min)
-6. **Reality check** - When this fails (10 min)
+1. **The Problem** - Free-form prompting pain 
+2. **The Solution** - Good architecture + templates
+3. **The Template** - Your reusable prompt guide 
+4. **Hands-on** - Build a feature using templates
+5. **Brownfield reality** - Legacy code challenges 
+6. **Reality check** - When this fails 
 
 </v-clicks>
 
 <!--
-This is hands-on. Minimal talking from me.
+This is hands-on, but structured.
 
-You'll learn more from trying than from listening.
+You'll learn a repeatable approach, not just experimentation.
 -->
 
 ---
 layout: center
 ---
 
-# Context: What I Built
+# Part 1: The Problem
 
-Quick look at free-form LLM coding
+Why free-form prompting creates technical debt
 
 ---
 
@@ -125,7 +125,7 @@ Fast, but...
 
 # The Code
 
-```csharp {all|1-10|12-26|all}
+```csharp {all|1-10|12-27|29-30}{maxHeight: '400px'}
 // All in one file (Program.cs) - 87 lines
 var responses = new[] {
     "That's an interesting point! Tell me more.",
@@ -177,7 +177,7 @@ You'll see this yourself in a moment.
 
 # The Frontend
 
-```vue {all|1-9|11-18|20-26|all}
+```vue {all|2-7|13-25|11|all}{maxHeight: '400px'}
 <script setup lang="ts">
 interface Message {
   id: number
@@ -251,9 +251,202 @@ Now let's see what YOU build.
 layout: center
 ---
 
-# Your Turn
+# Part 2: The Solution
 
-Build something with an LLM
+Structured architecture + Prompt templates
+
+---
+
+# What Good Architecture Looks Like
+
+Instead of everything in one file, organize by **features**:
+
+```
+Domain/Features/Reactions/
+  ├── Reaction.cs         # Business logic
+  ├── ReactionUseCase.cs  # Orchestration
+  └── IReactionRepo.cs    # Interface
+
+Infrastructure/Features/Reactions/
+  └── InMemoryReactionRepo.cs
+
+Tests/Features/Reactions/
+  └── Reactions.feature   # BDD tests
+```
+
+<v-click>
+
+**Key**: Each feature is self-contained and testable
+
+</v-click>
+
+<!--
+This is what Exercise 2/3 looks like.
+
+Clean separation of concerns.
+Same code, whether free-form or template-driven.
+-->
+
+---
+
+# The Challenge
+
+How do you **consistently** get the LLM to produce this structure?
+
+<v-clicks>
+
+**❌ Free-form**: "Add reactions"
+- LLM decides where files go
+- Inconsistent patterns
+- May skip tests
+
+**✅ Template-driven**: "Using .prompts/NEW_FEATURE_TEMPLATE.md, add reactions"
+- You decide the structure
+- Consistent patterns
+- Tests included
+
+</v-clicks>
+
+<!--
+This is the insight.
+
+Templates encode YOUR standards.
+-->
+
+---
+
+# Part 3: The Template
+
+Your reusable prompt guide
+
+---
+layout: center
+---
+
+# The Feature Template
+
+`.prompts/NEW_FEATURE_TEMPLATE.md`
+
+---
+
+# What's in the Template?
+
+A step-by-step guide for the LLM:
+
+<v-clicks>
+
+**1. Structure**: Where files go (Domain → Application → Infrastructure → API → Tests → Frontend)
+
+**2. Patterns**: DDD entities, value objects, repositories, handlers
+
+**3. Examples**: Code snippets showing exactly what you want
+
+**4. Standards**: Naming conventions, testing requirements, validation rules
+
+**5. Checklist**: Ensure nothing is forgotten
+
+</v-clicks>
+
+<!--
+This is the money shot.
+
+A reusable, shareable guide for consistent code.
+-->
+
+---
+
+# Template Structure
+
+```markdown
+## Step-by-Step Feature Implementation
+
+### 1. Domain Layer (Business Logic)
+**Location**: `Domain/Features/{FeatureName}/`
+
+**Rules**:
+- ✅ No dependencies on other layers
+- ✅ Pure business logic only
+- ✅ Validation in constructors
+- ❌ No infrastructure concerns
+
+**Example**:
+[Code example showing domain entity with validation]
+
+### 2. Application Layer (Use Cases)
+[Similar detailed guidance...]
+
+### 3-6. [Infrastructure, API, Tests, Frontend]
+```
+
+<!--
+Each step has:
+- Clear location
+- Explicit rules
+- Working example
+
+Copy-paste ready.
+-->
+
+---
+
+# Using the Template
+
+Your prompt to the LLM:
+
+```text
+Using .prompts/NEW_FEATURE_TEMPLATE.md, add message reactions.
+
+Requirements:
+- Emoji reactions (👍, ❤️, 😂)
+- Store per message
+- Show counts in UI
+
+Follow the template structure exactly.
+```
+
+<v-click>
+
+**Result**: Structured code + tests, consistent architecture
+
+</v-click>
+
+<!--
+Same feature. Different approach.
+
+Template guides the LLM step-by-step.
+-->
+
+---
+
+# Why This Works
+
+<v-clicks>
+
+**Consistency**: Every feature follows same structure
+
+**Onboarding**: New devs (and LLMs) know where things go
+
+**Review**: Easy to spot deviations from standard
+
+**Scaling**: Share template across team
+
+**Evolution**: Update template = update all future code
+
+</v-clicks>
+
+<!--
+This is about team scalability.
+
+Not just you and an LLM. Your whole team.
+-->
+
+---
+layout: center
+---
+
+# Part 4: Hands-On
+
+Build a feature using the template
 
 ---
 
@@ -282,31 +475,6 @@ They're all similar difficulty.
 
 ---
 
-# How to Approach It
-
-<v-clicks>
-
-**Up to you!**
-
-Some ideas:
-- Free-form: "Add message reactions to this chatbot"
-- More specific: "Add reactions using X pattern..."
-- Very detailed: Write out full requirements
-
-**Goal**: See what works for YOU
-
-</v-clicks>
-
-<!--
-This is the experiment.
-
-How much guidance do you give the LLM?
-
-Try your instinct. We'll compare notes after.
--->
-
----
-
 # Setup
 
 ```bash
@@ -314,30 +482,47 @@ Try your instinct. We'll compare notes after.
 git clone https://github.com/MatthijsRademaker/cl-session-vibe-coding.git
 cd cl-session-vibe-coding
 
-# Start on exercise-1 (simple chatbot)
-git checkout exercise-1-freeform
+# Start with clean architecture base (exercise-2/3)
+git checkout exercise-2-ddd-guardrails
 
-# Frontend
-cd frontend && npm install && npm run dev
-
-# Backend
-cd backend/Api && dotnet run
-
+docker compose up -d
 # LLM ready? (ChatGPT / Claude / Copilot)
 ```
 
 <v-click>
 
-**Ready? Build time** ⏱️ (~30 min)
+**Your prompt**: "Using .prompts/NEW_FEATURE_TEMPLATE.md, add [your chosen feature]"
 
 </v-click>
 
 <!--
-Everyone set up?
+Start with clean architecture.
 
-Questions before we start?
+Use the template from the start.
+-->
 
-Alright, go!
+---
+
+# Ready? Build Time ⏱️
+
+**~40 minutes**
+
+<v-clicks>
+
+**Tips**:
+- Read the template first
+- Include it in your prompt
+- Review each step the LLM produces
+- Iterate if needed
+
+**Goal**: Experience template-driven development
+
+</v-clicks>
+
+<!--
+This is the hands-on portion.
+
+Try it yourself. See how it feels.
 -->
 
 ---
@@ -354,13 +539,13 @@ What did we discover?
 
 <v-clicks>
 
-**Did it work?**
+**Did the template help guide the LLM?**
 
-**How many iterations with the LLM?**
+**How many iterations did you need?**
 
-**What was hard? What was easy?**
+**Code quality - would you ship this?**
 
-**Would you ship this?**
+**What would you change in the template?**
 
 </v-clicks>
 
@@ -368,238 +553,68 @@ What did we discover?
 Get 3-4 people to share.
 
 Listen for:
-- Structure problems
-- Iteration count
-- Confidence in the code
+- Template clarity
+- LLM adherence to structure
+- Areas for improvement
 -->
 
 ---
 
-# Common Patterns
+# Template-Driven Results
 
 <v-clicks>
 
-✅ **Fast initial generation**
+✅ **Consistent structure** across features
 
-⚠️ **Lots of iteration** (5-10+ rounds)
+✅ **Fewer iterations** (3-5 vs 10+)
 
-⚠️ **Structure all over the place**
+✅ **Tests included** by default
 
-⚠️ **Not sure where to add next feature**
+✅ **Clear where things go**
 
-❓ **Would I ship this?** (mixed feelings)
+⚠️ **Takes time to build good template** initially
+
+⚠️ **Template maintenance** as standards evolve
 
 </v-clicks>
 
 <!--
-This is the problem free-form hits:
-- Speed is great
-- But structure? Consistency? Tests?
+Template approach trade-offs:
+- Upfront investment in template creation
+- But ongoing consistency and speed
 
-Sound familiar?
+Most teams find it worth it.
 -->
 
 ---
 
-# The Challenge
+# Key Insight
 
 <v-clicks>
 
-**LLM makes decisions**:
-- Where files go
-- How to structure code
-- What patterns to use
-- Whether to write tests
+**Free-form prompting**: Fast at first, slows down over time
 
-**Problem**: Those decisions are inconsistent
+**Template-driven**: Slower initially, speeds up over time
 
-**Question**: How do we guide it better?
+**The crossover**: Around feature 3-5
+
+After that, templates pay for themselves
 
 </v-clicks>
 
 <!--
-This is the insight.
+This is the reality.
 
-You can use LLMs fast, but you need some way to guide them.
-
-So... how?
+Templates have upfront cost but long-term benefit.
 -->
 
 ---
 layout: center
 ---
 
-# One Approach: Templates
+# Part 5: Brownfield Reality
 
-Encoding your standards
-
----
-
-# The Idea
-
-Instead of:
-> "Add message reactions"
-
-You say:
-> "Using this template, add message reactions"
-
-<v-click>
-
-**Template** = Your structure, patterns, standards
-
-</v-click>
-
-<!--
-Let me show you what I mean.
-
-This is ONE approach - not the only one.
--->
-
----
-
-# Example Template
-
-```markdown
-## Structure
-
-Domain/Features/{FeatureName}/
-  ├── {Entity}.cs        # Business logic
-  ├── {UseCase}.cs       # Orchestration
-  └── I{Repo}.cs         # Interface
-
-Tests/Features/{FeatureName}/
-  └── {Feature}.feature  # Gherkin tests
-
-## Requirements
-- Validation on all inputs
-- Error handling with Result<T>
-- BDD tests for happy + error paths
-```
-
-<!--
-This tells the LLM:
-- Where files go
-- What patterns to use
-- What quality means
-
-It's YOUR conventions, codified.
--->
-
----
-
-# Template in Action
-
-```text
-Using .prompts/NEW_FEATURE_TEMPLATE.md,
-add message reactions.
-
-Requirements:
-- Emoji reactions (👍, ❤️, 😂)
-- Store per message
-- Show counts in UI
-
-Follow the template structure.
-```
-
-<v-click>
-
-LLM generates structured code + tests
-
-</v-click>
-
-<!--
-Same feature you just built.
-
-But now the LLM follows YOUR structure.
--->
-
----
-
-# Compare
-
-<div grid="~ cols-2 gap-4">
-
-<div>
-
-## Free-form
-```
-backend/
-  Program.cs (everything)
-
-frontend/
-  ChatBot.vue
-```
-
-- Fast
-- Unstructured
-- Hard to extend
-
-</div>
-
-<div>
-
-## Template-driven
-```
-backend/Features/
-  Reactions/
-    Reaction.cs
-    UseCase.cs
-    IRepo.cs
-  Tests/
-    Reactions.feature
-```
-
-- Bit slower
-- Consistent
-- Clear where things go
-
-</div>
-
-</div>
-
-<!--
-Trade-off:
-- Lose 5-10 min upfront
-- Gain structure and consistency
-
-Worth it? Depends on your project.
--->
-
----
-
-# Discussion
-
-<v-clicks>
-
-**Would a template have helped you?**
-
-**What would YOUR template include?**
-
-</v-clicks>
-
-<v-click>
-
-<div class="text-sm opacity-75 mt-8">
-Template is in the repo: .prompts/NEW_FEATURE_TEMPLATE.md
-</div>
-
-</v-click>
-
-<!--
-This is the key question.
-
-There's no one-size-fits-all.
-
-What makes sense for YOUR codebase?
--->
-
----
-layout: center
----
-
-# But Wait...
-
-There's a problem
+Templates meet legacy code
 
 ---
 
@@ -812,7 +827,7 @@ But there IS a path forward.
 layout: center
 ---
 
-# Reality Check
+# Part 6: Reality Check
 
 When LLMs fail
 
@@ -849,20 +864,20 @@ LLMs are great for patterns, bad for novelty.
 
 <v-clicks>
 
-**LLMs**: Fast, but need guidance
+**Free-form prompting**: Fast initially, creates technical debt
 
-**Templates**: One way to add structure
+**Templates**: Consistency and structure at scale
 
-**Your approach**: Whatever works for you
+**Brownfield**: Strangler fig strategy (new clean, migrate gradually)
 
-**Reality**: Still needs review, iteration
+**Reality**: LLMs are tools, not magic - review always needed
 
 </v-clicks>
 
 <!--
 No silver bullet.
 
-Just tools. Use them thoughtfully.
+Templates help, but you still need to think.
 -->
 
 ---

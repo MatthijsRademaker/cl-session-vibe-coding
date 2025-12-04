@@ -11,15 +11,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add CORS for frontend
+// Add CORS for frontend (including Docker origins)
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+	options.AddDefaultPolicy(policy =>
+	{
+		policy
+		.AllowAnyOrigin()      // allow all origins
+		.AllowAnyHeader()      // allow all headers
+		.AllowAnyMethod();     // allow all HTTP methods
+				       // NOTE: Cannot use WithExposedHeaders with AllowAnyOrigin
+	});
 });
 
 // Register DDD layers
@@ -35,12 +37,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 app.UseCors();
-app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
