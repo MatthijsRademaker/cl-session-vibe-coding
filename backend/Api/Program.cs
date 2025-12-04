@@ -11,12 +11,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add CORS for frontend
+// Add CORS for frontend (including Docker origins)
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+        policy.WithOrigins(
+                  "http://localhost:5173",
+                  "http://localhost:5174",
+                  "http://0.0.0.0:5173",
+                  "http://0.0.0.0:5174",
+                  "http://127.0.0.1:5173",
+                  "http://127.0.0.1:5174"
+              )
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
