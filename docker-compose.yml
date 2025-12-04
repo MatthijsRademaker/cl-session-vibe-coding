@@ -8,6 +8,7 @@ services:
     command: ["dotnet", "watch", "run", "--no-launch-profile"]
     environment:
       ASPNETCORE_URLS: "http://0.0.0.0:5001"
+      ASPNETCORE_ENVIRONMENT: Development
     ports:
       - "5000:5000"
       - "5001:5001"
