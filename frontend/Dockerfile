@@ -3,14 +3,14 @@ FROM oven/bun:1 AS development
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files for dependency installation
 COPY package.json bun.lock* ./
 
-# Install dependencies
+# Install dependencies (this is cached unless package files change)
 RUN bun install
 
-# Copy the rest of the code
-COPY . .
+# DON'T copy source code here - it comes from the volume mount
+# This ensures the container always uses the latest code from your host
 
 # Expose Vite dev server port
 EXPOSE 5173

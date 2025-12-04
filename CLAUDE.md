@@ -187,19 +187,32 @@ Replace `AllowAnyOrigin()` with specific allowed origins before deploying.
 The project includes Docker support with hot reload for both frontend and backend:
 
 **Frontend**: Uses Bun runtime with Vite dev server
-- Volume mount for source code
+- **Dependencies only** copied during build (package.json)
+- **Source code** comes from volume mount at runtime
 - Hot reload enabled with `--host 0.0.0.0`
 - HMR configured for Docker with polling (1 second interval)
 - Port 5173 mapped to host
 - API URL: `http://localhost:5000` (browser-accessible)
 
 **Backend**: Uses .NET SDK with `dotnet watch`
-- Volume mounts exclude bin/obj folders
+- **Dependencies only** restored during build (.csproj files)
+- **Source code** comes from volume mount at runtime
+- Volume mounts exclude bin/obj folders (anonymous volumes)
 - Hot reload enabled with file polling
 - Port 5000 mapped to host
 - Environment: `DOTNET_USE_POLLING_FILE_WATCHER=1`
 
 Both containers run on a shared `chatbot-network` bridge network.
+
+### Why Dependencies-Only in Dockerfile?
+
+For development with volume mounts:
+- ✅ **DO**: Copy package/project files and restore dependencies in Dockerfile
+- ❌ **DON'T**: Copy source code in Dockerfile (use volume mounts instead)
+
+**Reason**: If you copy source code during build, the image contains old code. Even with volume mounts, you may get conflicts or need to rebuild the image for every code change. By only installing dependencies in the image and mounting source code at runtime, your changes are immediately available to the dev server.
+
+**Build cache**: Dependencies are cached in the Docker layer unless package.json or .csproj files change.
 
 ### Docker Hot Reload Troubleshooting
 
@@ -227,7 +240,11 @@ If hot reload isn't working:
 
 After changing Dockerfile or docker-compose.yml:
 ```bash
-docker-compose down
-docker-compose build --no-cache
-docker-compose up
+# Quick rebuild script
+./docker-rebuild.sh
+
+# Or manually:
+docker compose down
+docker compose build --no-cache
+docker compose up
 ```
