@@ -19,8 +19,8 @@ builder.Services.AddCors(options =>
 		policy
 		.AllowAnyOrigin()      // allow all origins
 		.AllowAnyHeader()      // allow all headers
-		.AllowAnyMethod()      // allow all HTTP methods
-		.WithExposedHeaders("*"); // for exposing headers
+		.AllowAnyMethod();     // allow all HTTP methods
+				       // NOTE: Cannot use WithExposedHeaders with AllowAnyOrigin
 	});
 });
 
@@ -42,7 +42,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
-app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

@@ -157,12 +157,30 @@ This repository supports a 2-hour hands-on workshop. Participants:
 
 ## CORS Configuration
 
-The backend is configured to accept requests from:
-- `http://localhost:5173` and `http://localhost:5174` (Vite default ports)
-- `http://0.0.0.0:5173` and `http://0.0.0.0:5174` (Docker host binding)
-- `http://127.0.0.1:5173` and `http://127.0.0.1:5174` (loopback)
+The backend currently uses a permissive CORS policy for development:
+- `AllowAnyOrigin()` - accepts requests from any origin
+- `AllowAnyHeader()` - accepts any headers
+- `AllowAnyMethod()` - accepts GET, POST, PUT, DELETE, etc.
 
-This covers both local development and Docker environments. If you need additional origins, update the CORS policy in `backend/Api/Program.cs` (around line 14-30).
+**Location**: `backend/Api/Program.cs` (around line 14-25)
+
+### Important CORS Limitations in ASP.NET Core
+
+**DO NOT** combine `AllowAnyOrigin()` with:
+- `AllowCredentials()` - will throw runtime exception
+- `WithExposedHeaders()` - will silently fail with 403 errors
+
+If you need these features, use specific origins instead:
+```csharp
+policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+      .AllowAnyHeader()
+      .AllowAnyMethod()
+      .AllowCredentials()
+      .WithExposedHeaders("Custom-Header");
+```
+
+### For Production
+Replace `AllowAnyOrigin()` with specific allowed origins before deploying.
 
 ## Docker Setup
 
