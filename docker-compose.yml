@@ -44,7 +44,7 @@ services:
       - /app/node_modules
       - /app/dist
     environment:
-      - VITE_API_URL=http://chatbot-backend:5000
+      - VITE_API_URL=http://localhost:5000
     networks:
       - chatbot-network
     depends_on:

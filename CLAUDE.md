@@ -171,11 +171,45 @@ The project includes Docker support with hot reload for both frontend and backen
 **Frontend**: Uses Bun runtime with Vite dev server
 - Volume mount for source code
 - Hot reload enabled with `--host 0.0.0.0`
+- HMR configured for Docker with polling (1 second interval)
 - Port 5173 mapped to host
+- API URL: `http://localhost:5000` (browser-accessible)
 
 **Backend**: Uses .NET SDK with `dotnet watch`
 - Volume mounts exclude bin/obj folders
-- Hot reload enabled
+- Hot reload enabled with file polling
 - Port 5000 mapped to host
+- Environment: `DOTNET_USE_POLLING_FILE_WATCHER=1`
 
 Both containers run on a shared `chatbot-network` bridge network.
+
+### Docker Hot Reload Troubleshooting
+
+If hot reload isn't working:
+
+**Frontend (Vite)**:
+- Changes should reload within 1-2 seconds
+- Check browser console for HMR connection errors
+- Ensure `vite.config.ts` has `usePolling: true` and `hmr.clientPort: 5173`
+- Try: `docker-compose restart frontend`
+
+**Backend (.NET)**:
+- Changes should trigger rebuild within 2-5 seconds
+- Check logs: `docker-compose logs -f backend`
+- Look for "dotnet watch" messages about file changes
+- Ensure `.csproj` files are properly copied in Dockerfile
+- Try: `docker-compose restart backend`
+
+**Network Issues**:
+- The browser accesses the backend via `localhost:5000`, NOT `chatbot-backend:5000`
+- `chatbot-backend` hostname only works for container-to-container communication
+- API URL in frontend must be `http://localhost:5000` when accessed from browser
+
+### Rebuilding After Configuration Changes
+
+After changing Dockerfile or docker-compose.yml:
+```bash
+docker-compose down
+docker-compose build --no-cache
+docker-compose up
+```

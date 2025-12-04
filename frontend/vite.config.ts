@@ -7,8 +7,14 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
+    strictPort: true,
     watch: {
       usePolling: true, // Enable polling for better file watching in Docker
+      interval: 1000, // Check for changes every 1 second
+    },
+    hmr: {
+      // HMR configuration for Docker
+      clientPort: 5173,
     },
   },
 })

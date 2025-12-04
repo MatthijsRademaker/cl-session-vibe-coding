@@ -23,7 +23,8 @@ EXPOSE 5000
 # Set environment variables for development
 ENV ASPNETCORE_ENVIRONMENT=Development
 ENV ASPNETCORE_URLS=http://+:5000
+ENV DOTNET_USE_POLLING_FILE_WATCHER=1
 
 # Run with hot reload using dotnet watch
 WORKDIR /app/Api
-CMD ["dotnet", "watch", "run", "--no-launch-profile"]
+CMD ["dotnet", "watch", "run", "--no-launch-profile", "--non-interactive"]
