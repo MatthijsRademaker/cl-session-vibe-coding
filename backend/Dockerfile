@@ -27,4 +27,4 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=1
 
 # Run with hot reload using dotnet watch
 WORKDIR /app/Api
-CMD ["dotnet", "watch", "run", "--no-launch-profile", "--non-interactive"]
+CMD ["dotnet", "watch" ]
