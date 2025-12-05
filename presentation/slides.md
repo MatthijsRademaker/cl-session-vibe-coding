@@ -851,6 +851,15 @@ LLM doesn't know your business
 
 </v-clicks>
 
+<v-click>
+
+<div class="border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 p-4 my-6 rounded-r">
+  <p class="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-1">💡 Exception</p>
+  <p class="text-sm text-blue-700 dark:text-blue-300">LLMs <em>can</em> handle business logic with well-thought-out spec files (e.g., BDD scenarios)</p>
+</div>
+
+</v-click>
+
 <!--
 Be honest about limits.
 
