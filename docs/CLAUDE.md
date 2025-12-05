@@ -4,123 +4,247 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **vibecoding workshop** designed for experienced developers who are skeptical about LLM-assisted coding. The project demonstrates progressive levels of LLM integration through practical exercises using a **chatbot** as the example application.
+This is a **vibecoding workshop repository** - a hands-on educational project for experienced developers to learn about LLM-assisted coding. The repo contains multiple exercise branches demonstrating different approaches to building the same chatbot application (from free-form to DDD with proper architecture).
 
-### Workshop Structure
+**Important**: This is a teaching repository. The code intentionally shows progression from poor to good practices across different branches.
 
-Each exercise follows this pattern:
-1. **Base layer** - Minimal scaffolding (Vue + .NET) → commit
-2. **Exercise solution** - Implementation with different levels of LLM guidance → commit
+## Repository Structure
 
-### Exercise Levels
+### Multi-Stack Application
+- **Frontend**: Vue 3 + TypeScript + Vite (in `frontend/`)
+- **Backend**: .NET 8 Web API with DDD architecture (in `backend/`)
+- **Presentation**: Slidev presentation (in `presentation/`)
 
-1. **Exercise 1 - Free-form vibecoding**: Let the LLM work autonomously with minimal constraints (e.g., "create a chatbot")
-   - LLM makes ALL decisions about structure, patterns, features
-   - Shows what you get with zero guardrails
+### Branch Structure
+The exercises are layered branches building on each other:
+- `main` - Base layer
+- `exercise-0-messy-legacy` - Intentionally messy brownfield code
+- `exercise-1-freeform` - Fast prototype (no architecture)
+- `exercise-2-ddd-guardrails` - Clean DDD implementation
+- `exercise-3-prompt-engineering` - Template-guided implementation
+- `exercise-4-brownfield-migration` - Migration strategy
 
-2. **Exercise 2 - Structured guardrails**: Same task but with architectural constraints
-   - DDD for backend, specific Vue patterns for frontend
-   - Demonstrates controlled LLM behavior within established patterns
+## Common Development Commands
 
-3. **Exercise 3 - Prompt engineering**: Same task with pre-made, reusable prompts
-   - Template-based approach for consistency
-   - Shows how to standardize LLM output
+### Docker (Recommended)
+```bash
+docker-compose up            # Start both frontend and backend with hot reload
+docker-compose up -d         # Start in detached mode
+docker-compose down          # Stop all services
+docker-compose logs -f       # View logs
+docker-compose restart backend   # Restart specific service
+```
 
-The workshop compares these approaches to help developers understand when and how to effectively use LLM assistance.
+Both services run with hot reload enabled:
+- Frontend: http://localhost:5173
+- Backend: http://localhost:5000
+- Swagger: http://localhost:5000/swagger
+
+### Frontend (Vue + Vite) - Local Development
+```bash
+cd frontend
+npm install          # Install dependencies (or use bun install)
+npm run dev          # Start dev server (http://localhost:5173)
+npm run build        # Build for production
+```
+
+### Backend (.NET 8 API) - Local Development
+```bash
+cd backend/Api
+dotnet restore       # Restore NuGet packages
+dotnet run           # Run API (http://localhost:5000)
+dotnet build         # Build solution
+dotnet watch run     # Run with hot reload
+```
+
+### Testing (Backend)
+```bash
+cd backend/Tests
+dotnet test                           # Run all tests
+dotnet test --logger "console;verbosity=detailed"  # Verbose output
+```
+
+The test project uses xUnit, Reqnroll (BDD), and FluentAssertions.
+
+### Presentation
+```bash
+npm run slides       # Start Slidev presentation
+npm run slides:build # Build presentation
+npm run slides:export # Export presentation
+```
 
 ## Architecture
 
-### Frontend
-- **Location**: `frontend/`
-- **Stack**: Vue 3 + TypeScript + Vite
-- **Build tool**: Rolldown-Vite (experimental Vite replacement)
-- **Component style**: Single File Components (SFC) with `<script setup>` syntax
+### Backend: Domain-Driven Design (DDD)
 
-### Backend
-- **Location**: `backend/Api/`
-- **Base**: Scaffolded .NET Web API
-- **For Exercise 2+**: Domain-Driven Design (DDD) structure
-  - **Domain**: Core business logic and entities
-  - **Application**: Use cases and application services
-  - **Infrastructure**: Data access, external services
-  - **API**: HTTP endpoints and controllers
-- **Testing**: BDD approach for verifying functionality (Exercise 2+)
+The .NET backend follows clean architecture with DDD patterns:
 
-## Common Commands
+```
+Api/                    - Entry point, controllers, dependency injection
+├── Controllers/        - HTTP endpoints (thin controllers)
+├── Program.cs          - DI container configuration
 
-### Frontend (Vue/Vite)
+Application/           - Use cases and DTOs (orchestration layer)
+├── DTOs/              - Data transfer objects
+├── UseCases/          - Application logic (e.g., SendMessageUseCase)
 
-```bash
-# Navigate to frontend
-cd frontend
+Domain/                - Core business logic (framework-independent)
+├── Entities/          - Domain models (Message, Conversation)
+├── Interfaces/        - Repository contracts (IConversationRepository)
+├── Services/          - Domain service contracts (IChatbotService)
 
-# Install dependencies
-npm install
+Infrastructure/        - External concerns (I/O, persistence)
+├── Repositories/      - Repository implementations (InMemoryConversationRepository)
+├── Services/          - External service implementations (RuleBasedChatbotService)
 
-# Run development server
-npm run dev
-
-# Type-check and build for production
-npm run build
-
-# Preview production build
-npm run preview
+Tests/                 - xUnit + Reqnroll tests
 ```
 
-### Backend (.NET)
-
-```bash
-# Navigate to backend
-cd backend/Api
-
-# Restore dependencies
-dotnet restore
-
-# Run the API
-dotnet run
-
-# Run tests (when added)
-dotnet test
+### Dependency Flow
+```
+Api → Application → Domain ← Infrastructure
+                      ↑
+                  (implements)
 ```
 
-## Workshop Exercise Guidelines
+**Key Principle**: Domain layer has no dependencies. Infrastructure and Application depend on Domain interfaces.
 
-When implementing features for workshop exercises:
+### Frontend: Vue 3 Composition API
 
-### Exercise 1 - Free-form Mode
-- Minimal architectural constraints
-- Let the LLM make decisions about structure, naming, patterns
-- Focus on getting working code quickly
-- Document what the LLM chose to do and why
+Simple Vue 3 setup:
+- TypeScript with strict mode
+- Vite for fast dev server and HMR
+- Components in `src/components/`
+- Entry point: `src/main.ts`
 
-### Exercise 2 - Guardrails Mode
-- Follow strict architectural patterns (DDD for backend, Vue composition API patterns for frontend)
-- Enforce naming conventions and folder structure
-- Require specific patterns for data flow, validation, error handling
-- LLM should ask for clarification when patterns are ambiguous
+## Important Context for AI Coding
 
-### Exercise 3 - Prompt Engineering Mode
-- Use predefined prompts stored in the project (location TBD)
-- Prompts should be reusable templates with parameter substitution
-- Focus on consistency and repeatability across similar tasks
-- Examples: "create CRUD endpoint", "add form validation", "implement BDD test scenario"
+### When Working Across Branches
+- Each exercise branch represents a **different quality level** of the same feature
+- Exercise 0 is **intentionally bad** (teaching tool)
+- Exercise 2-4 show **proper architecture**
+- Don't "fix" Exercise 0/1 to look like Exercise 2 unless explicitly asked
 
-## Key Architectural Decisions
+### DDD Architecture Rules (Exercise 2+)
+- **Domain entities** use private setters, factory methods, and validation
+- **Use cases** coordinate between domain and infrastructure
+- **Controllers** are thin - delegate to use cases
+- **Never** let infrastructure concerns leak into Domain
+- **Repository pattern** abstracts data access
 
-### Frontend
-- TypeScript strict mode for type safety
-- Composition API with `<script setup>` (not Options API)
-- Keep components focused and single-purpose
+### Testing Philosophy
+- Tests use **xUnit** (not NUnit or MSTest)
+- Use **FluentAssertions** for readable assertions
+- **Reqnroll** for BDD-style feature tests (successor to SpecFlow)
 
-### Backend (planned)
-- Domain layer should have no external dependencies
-- Application layer orchestrates use cases
-- Infrastructure implements interfaces defined in Application/Domain
-- BDD tests should be written in Gherkin format and focus on business scenarios, not implementation details
+## Workshop Context
 
-## Notes for LLM Instances
+This repository supports a 2-hour hands-on workshop. Participants:
+1. See messy legacy code (Exercise 0)
+2. Compare free-form vs. structured approaches
+3. Build features using prompt templates
+4. Experience maintenance challenges
 
-- This is a **teaching project** - prioritize clarity and demonstrable patterns over production-grade optimization
-- Each exercise level should produce working code that can be compared side-by-side
-- When implementing DDD, be explicit about which layer each class belongs to
-- BDD tests should read like executable specifications that non-technical stakeholders could understand
+**Key Insight**: The goal is to show trade-offs between speed and structure, not to declare one approach "best."
+
+## What NOT to Do
+
+- Don't add unnecessary complexity to Exercise 1 (it's meant to be simple)
+- Don't remove the intentional technical debt in Exercise 0/1 (teaching examples)
+- Don't change the DDD architecture in Exercise 2+ without explicit request
+- Don't add authentication, database, or production features (this is a workshop demo)
+- Don't suggest "improvements" that would obscure the teaching points
+
+## CORS Configuration
+
+The backend currently uses a permissive CORS policy for development:
+- `AllowAnyOrigin()` - accepts requests from any origin
+- `AllowAnyHeader()` - accepts any headers
+- `AllowAnyMethod()` - accepts GET, POST, PUT, DELETE, etc.
+
+**Location**: `backend/Api/Program.cs` (around line 14-25)
+
+### Important CORS Limitations in ASP.NET Core
+
+**DO NOT** combine `AllowAnyOrigin()` with:
+- `AllowCredentials()` - will throw runtime exception
+- `WithExposedHeaders()` - will silently fail with 403 errors
+
+If you need these features, use specific origins instead:
+```csharp
+policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+      .AllowAnyHeader()
+      .AllowAnyMethod()
+      .AllowCredentials()
+      .WithExposedHeaders("Custom-Header");
+```
+
+### For Production
+Replace `AllowAnyOrigin()` with specific allowed origins before deploying.
+
+## Docker Setup
+
+The project includes Docker support with hot reload for both frontend and backend:
+
+**Frontend**: Uses Bun runtime with Vite dev server
+- **Dependencies only** copied during build (package.json)
+- **Source code** comes from volume mount at runtime
+- Hot reload enabled with `--host 0.0.0.0`
+- HMR configured for Docker with polling (1 second interval)
+- Port 5173 mapped to host
+- API URL: `http://localhost:5000` (browser-accessible)
+
+**Backend**: Uses .NET SDK with `dotnet watch`
+- **Dependencies only** restored during build (.csproj files)
+- **Source code** comes from volume mount at runtime
+- Volume mounts exclude bin/obj folders (anonymous volumes)
+- Hot reload enabled with file polling
+- Port 5000 mapped to host
+- Environment: `DOTNET_USE_POLLING_FILE_WATCHER=1`
+
+Both containers run on a shared `chatbot-network` bridge network.
+
+### Why Dependencies-Only in Dockerfile?
+
+For development with volume mounts:
+- ✅ **DO**: Copy package/project files and restore dependencies in Dockerfile
+- ❌ **DON'T**: Copy source code in Dockerfile (use volume mounts instead)
+
+**Reason**: If you copy source code during build, the image contains old code. Even with volume mounts, you may get conflicts or need to rebuild the image for every code change. By only installing dependencies in the image and mounting source code at runtime, your changes are immediately available to the dev server.
+
+**Build cache**: Dependencies are cached in the Docker layer unless package.json or .csproj files change.
+
+### Docker Hot Reload Troubleshooting
+
+If hot reload isn't working:
+
+**Frontend (Vite)**:
+- Changes should reload within 1-2 seconds
+- Check browser console for HMR connection errors
+- Ensure `vite.config.ts` has `usePolling: true` and `hmr.clientPort: 5173`
+- Try: `docker-compose restart frontend`
+
+**Backend (.NET)**:
+- Changes should trigger rebuild within 2-5 seconds
+- Check logs: `docker-compose logs -f backend`
+- Look for "dotnet watch" messages about file changes
+- Ensure `.csproj` files are properly copied in Dockerfile
+- Try: `docker-compose restart backend`
+
+**Network Issues**:
+- The browser accesses the backend via `localhost:5000`, NOT `chatbot-backend:5000`
+- `chatbot-backend` hostname only works for container-to-container communication
+- API URL in frontend must be `http://localhost:5000` when accessed from browser
+
+### Rebuilding After Configuration Changes
+
+After changing Dockerfile or docker-compose.yml:
+```bash
+# Quick rebuild script
+./docker-rebuild.sh
+
+# Or manually:
+docker compose down
+docker compose build --no-cache
+docker compose up
+```
