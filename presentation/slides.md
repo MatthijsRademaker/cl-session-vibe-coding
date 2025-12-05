@@ -318,14 +318,26 @@ Templates encode YOUR standards.
 # Part 3: The Template
 
 Your reusable prompt guide
+```markdown
+## Step-by-Step Feature Implementation
 
----
-layout: center
----
+### 1. Domain Layer (Business Logic)
+**Location**: `Domain/Features/{FeatureName}/`
 
-# The Feature Template
+**Rules**:
+- ✅ No dependencies on other layers
+- ✅ Pure business logic only
+- ✅ Validation in constructors
+- ❌ No infrastructure concerns
 
-`.prompts/NEW_FEATURE_TEMPLATE.md`
+**Example**:
+[Code example showing domain entity with validation]
+
+### 2. Application Layer (Use Cases)
+[Similar detailed guidance...]
+
+### 3-6. [Infrastructure, API, Tests, Frontend]
+```
 
 ---
 
@@ -355,39 +367,6 @@ A reusable, shareable guide for consistent code.
 
 ---
 
-# Template Structure
-
-```markdown
-## Step-by-Step Feature Implementation
-
-### 1. Domain Layer (Business Logic)
-**Location**: `Domain/Features/{FeatureName}/`
-
-**Rules**:
-- ✅ No dependencies on other layers
-- ✅ Pure business logic only
-- ✅ Validation in constructors
-- ❌ No infrastructure concerns
-
-**Example**:
-[Code example showing domain entity with validation]
-
-### 2. Application Layer (Use Cases)
-[Similar detailed guidance...]
-
-### 3-6. [Infrastructure, API, Tests, Frontend]
-```
-
-<!--
-Each step has:
-- Clear location
-- Explicit rules
-- Working example
-
-Copy-paste ready.
--->
-
----
 
 # Using the Template
 
@@ -504,8 +483,6 @@ Use the template from the start.
 ---
 
 # Ready? Build Time ⏱️
-
-**~40 minutes**
 
 <v-clicks>
 
@@ -765,31 +742,6 @@ Same strategy for code.
 
 ---
 
-# Timeline
-
-**Month 1**: All new features in clean architecture
-- Legacy: 90%, Clean: 10%
-- Feature speed: 18 min average
-
-**Month 3**: Migrate a few old pieces when fixing bugs
-- Legacy: 60%, Clean: 40%
-- Feature speed: 14 min average
-
-**Month 6**: Most code is clean
-- Legacy: 30%, Clean: 70%
-- Feature speed: 10 min average
-
-**Key**: Legacy shrinks naturally over time
-
-<!--
-This is realistic migration.
-
-Not a 3-month rewrite project.
-
-Gradual, sustainable improvement.
--->
-
----
 
 # Brownfield Takeaways
 
@@ -802,8 +754,6 @@ Gradual, sustainable improvement.
 **Templates help** but can't fix fundamental mess
 
 **Strategy**: Strangler fig (new clean, migrate gradually)
-
-**Timeline**: Months, not weeks
 
 </v-clicks>
 
@@ -848,6 +798,9 @@ Optimizes for readability, not speed
 
 **Your domain logic**
 LLM doesn't know your business
+       
+    <!-- TODO: Make a note -->  
+    however, using BDD and well structured user stories the LLM can achieve quite a lot
 
 </v-clicks>
 
