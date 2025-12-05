@@ -798,11 +798,17 @@ Optimizes for readability, not speed
 
 **Your domain logic**
 LLM doesn't know your business
-       
-    <!-- TODO: Make a note -->  
-    however, using BDD and well structured user stories the LLM can achieve quite a lot
 
 </v-clicks>
+
+<v-click>
+
+<div class="border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 p-4 my-6 rounded-r">
+  <p class="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-1">💡 Exception</p>
+  <p class="text-sm text-blue-700 dark:text-blue-300">However, using BDD and well-structured user stories, the LLM can achieve quite a lot</p>
+</div>
+
+</v-click>
 
 <!--
 Be honest about limits.
