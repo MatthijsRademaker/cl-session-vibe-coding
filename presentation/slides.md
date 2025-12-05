@@ -65,6 +65,19 @@ Just exploring: if you're going to use LLMs for code, how do you do it well?
 
 ---
 
+# Showcase
+
+<v-clicks>
+
+- Throwaway code <a href="http://localhost:3000/">DECC</a>
+- Production code (a.s.r)
+    - <a href="https://www.asr.nl/verzekeringen/zorgverzekering/machtiging-aanvragen/ongevallendekking"> Form 1 </a>
+    - <a href="https://www.asr.nl/verzekeringen/zorgverzekering/machtiging-aanvragen/hulpmiddelen"> Form 2 </a>
+
+
+</v-clicks>
+---
+
 # How to
 
 <v-clicks>
@@ -806,6 +819,7 @@ LLM doesn't know your business
 <div class="border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 p-4 my-6 rounded-r">
   <p class="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-1">💡 Exception</p>
   <p class="text-sm text-blue-700 dark:text-blue-300">However, using BDD and well-structured user stories, the LLM can achieve quite a lot</p>
+       <p class="text-sm" >A great way to create structures like these is using <a href="https://openspec.dev/">openspec</a></p>
 </div>
 
 </v-click>
